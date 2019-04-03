@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "OiTuimMbWiw10!",
-    "database": "brew_db",
+    "database": "brewspace",
     "host": "localhost",
     "dialect": "mysql"
   },
