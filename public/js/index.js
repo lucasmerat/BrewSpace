@@ -113,6 +113,7 @@ $(".create-user").on("submit", function(event) {
   var newUser = {
     email, password
   };
+  console.log(newUser)
 
   // Send the POST request.
   $.ajax("/api/signin", {
@@ -144,6 +145,6 @@ $(".login-user").on("submit", function(event) {
     type: "POST",
     data: User
   }).then(function() {
-    console.log("User Log");
+    console.log("User Logged in");
   });
 });
