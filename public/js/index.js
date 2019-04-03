@@ -97,3 +97,53 @@ var handleDeleteBtnClick = function() {
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
 $exampleList.on("click", ".delete", handleDeleteBtnClick);
+
+$(".create-user").on("submit", function(event) {
+  // Make sure to preventDefault on a submit event.
+  event.preventDefault();
+  var email = $("#email")
+    .val()
+    .trim();
+  var password = $("#password")
+    .val()
+    .trim();
+  if (email === "" || password === "")
+    return;
+
+  var newUser = {
+    email, password
+  };
+
+  // Send the POST request.
+  $.ajax("/api/signin", {
+    type: "POST",
+    data: newUser
+  }).then(function() {
+    console.log("Created new user");
+  });
+});
+
+$(".login-user").on("submit", function(event) {
+  // Make sure to preventDefault on a submit event.
+  event.preventDefault();
+  var email = $("#emailLog")
+    .val()
+    .trim();
+  var password = $("#passwordLog")
+    .val()
+    .trim();
+  if (email === "" || password === "")
+    return;
+
+  var User = {
+    email, password
+  };
+
+  // Send the POST request.
+  $.ajax("/api/login", {
+    type: "POST",
+    data: User
+  }).then(function() {
+    console.log("User Log");
+  });
+});
