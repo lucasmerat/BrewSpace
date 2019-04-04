@@ -188,9 +188,7 @@ $(".login-user").on("submit", function(event) {
       writeCookie(logged.email, "email");
       writeCookie(logged.status, "log");
     } else {
-      console.log("Log Out");
-      deleteCookie(logged.email, "email");
-      deleteCookie(logged.status, "log");
+      console.log("Wrong Input");
     }
   });
 });
