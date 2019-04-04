@@ -25,6 +25,39 @@ module.exports = function(app) {
     });
   });
 
+  var BeerReduction = function(array) {
+    var Beers = [];
+    var BeerNames = [];
+    var BeerQuantity = [];
+    var BeerResults = {};
+    var BeersComplete = [];
+    if (array.length === 0) {
+      return;
+    }
+    for (i = 0; i < array.length; i++) {
+      Beers.push(array[i].name);
+    }
+
+    for (i = 0; i < Beers.length; i++) {
+      if (BeerNames.indexOf(Beers[i]) < 0) {
+        BeerNames.push(Beers[i]);
+        BeerQuantity.push(1);
+      } else {
+        var index = BeerNames.indexOf(Beers[i]);
+        var value = BeerQuantity[index];
+        BeerQuantity[index] = value + 1;
+      }
+    }
+    for (i = 0; i < BeerNames.length; i++) {
+      BeerResults.Name = BeerNames[i];
+      BeerResults.Quantity = BeerQuantity[i];
+      console.log(BeerResults);
+      BeersComplete.push(BeerResults);
+      BeerResults = {};
+    }
+    return BeersComplete;
+  };
+
   // Create User
   // eslint-disable-next-line no-unused-vars
   app.post("/api/signin", function(req, res) {
@@ -55,10 +88,65 @@ module.exports = function(app) {
       }
     }).then(function(dbUser) {
       if (Decrypt(req.body.password, dbUser.password)) {
-        console.log(true);
+        res.json({
+          status: true,
+          email: dbUser.email
+        });
       } else {
-        console.log(false);
+        res.json({
+          status: false,
+          email: dbUser.email
+        });
       }
+    });
+  });
+
+  //Add beer to database - Probably needs to be deleted
+  app.post("/api/beers", function(req, res) {
+    console.log(req.body);
+    db.Beer.create({
+      name: req.body.name
+    }).then(function(dbBeer) {
+      res.json(dbBeer);
+    });
+  });
+
+  //Check users
+  app.get("/api/users", function(req, res) {
+    db.User.findAll({
+      include: [{ model: db.Beer }]
+    }).then(function(dbUser) {
+      res.json(dbUser);
+    });
+  });
+
+  //Add beer to user and database at the same time!!!
+  app.put("/api/users/:id", function(req, res) {
+    db.User.findOne({
+      where: { id: req.params.id },
+      include: [{ model: db.Beer }]
+    })
+      .then(function(dbUser) {
+        //Req.body must be name:beer...as is going to be added to the beer DB
+        return dbUser.createBeer(req.body);
+      })
+      .then(res.send.bind(res));
+  });
+
+  //Check user beers
+  app.get("/api/users/beers/:id", function(req, res) {
+    db.User.findOne({
+      where: { id: req.params.id },
+      include: [{ model: db.Beer }]
+    }).then(function(dbUser) {
+      res.json(BeerReduction(dbUser.Beers));
+    });
+  });
+
+  //Check beers
+  app.get("/api/beers", function(req, res) {
+    db.Beer.findAll({}).then(function(dbBeer) {
+      res.json(BeerReduction(dbBeer));
     });
   });
 };
