@@ -98,6 +98,41 @@ var handleDeleteBtnClick = function() {
 $submitBtn.on("click", handleFormSubmit);
 $exampleList.on("click", ".delete", handleDeleteBtnClick);
 
+function writeCookie(value, variable) {
+  var now = new Date();
+  now.setMonth(now.getMonth() + 1);
+  cookievalue = value + ";";
+  document.cookie =
+    variable + "=" + cookievalue + "expires=" + now.toUTCString() + ";";
+}
+
+function ReadCookie() {
+  var allcookies = document.cookie;
+
+  // Get all the cookies pairs in an array
+  var cookiearray = [];
+  if (allcookies.length > 1) {
+    cookiearray = allcookies.split(";");
+  }
+  // Now take key value pair out of this array
+  if (cookiearray.length > 0) {
+    email = cookiearray[0].split("=")[1];
+    log = cookiearray[1].split("=")[1];
+
+    return { email: email, log: log };
+  } else {
+    return { log: false };
+  }
+}
+
+function deleteCookie(value, variable) {
+  var now = new Date();
+  now.setMonth(now.getMonth() - 1);
+  cookievalue = value + ";";
+  document.cookie =
+    variable + "=" + cookievalue + "expires=" + now.toUTCString() + ";";
+}
+
 $(".create-user").on("submit", function(event) {
   // Make sure to preventDefault on a submit event.
   event.preventDefault();
@@ -107,13 +142,14 @@ $(".create-user").on("submit", function(event) {
   var password = $("#password")
     .val()
     .trim();
-  if (email === "" || password === "")
+  if (email === "" || password === "") {
     return;
+  }
 
   var newUser = {
-    email, password
+    email: email,
+    password: password
   };
-  console.log(newUser)
 
   // Send the POST request.
   $.ajax("/api/signin", {
@@ -133,18 +169,37 @@ $(".login-user").on("submit", function(event) {
   var password = $("#passwordLog")
     .val()
     .trim();
-  if (email === "" || password === "")
+  if (email === "" || password === "") {
     return;
+  }
 
   var User = {
-    email, password
+    email: email,
+    password: password
   };
 
   // Send the POST request.
   $.ajax("/api/login", {
     type: "POST",
     data: User
-  }).then(function() {
-    console.log("User Logged in");
+  }).then(function(logged) {
+    if (logged.status) {
+      console.log("User has logged");
+      writeCookie(logged.email, "email");
+      writeCookie(logged.status, "log");
+    } else {
+      console.log("Log Out");
+      deleteCookie(logged.email, "email");
+      deleteCookie(logged.status, "log");
+    }
   });
 });
+
+//Check if is already logged
+var logged = ReadCookie();
+if (logged.email !== undefined) {
+  console.log("Already logged");
+} else {
+  console.log("No one is logged");
+}
+console.log(ReadCookie());
