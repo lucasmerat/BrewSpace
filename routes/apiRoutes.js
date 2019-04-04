@@ -30,6 +30,7 @@ module.exports = function(app) {
     var BeerNames = [];
     var BeerQuantity = [];
     var BeerResults = {};
+    var BeersComplete = [];
     if (array.length === 0) {
       return;
     }
@@ -48,9 +49,13 @@ module.exports = function(app) {
       }
     }
     for (i = 0; i < BeerNames.length; i++) {
-      BeerResults[BeerNames[i]] = BeerQuantity[i];
+      BeerResults.Name = BeerNames[i];
+      BeerResults.Quantity = BeerQuantity[i];
+      console.log(BeerResults);
+      BeersComplete.push(BeerResults);
+      BeerResults = {};
     }
-    return BeerResults;
+    return BeersComplete;
   };
 
   // Create User
