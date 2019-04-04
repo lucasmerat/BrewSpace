@@ -1,4 +1,5 @@
 var db = require("../models");
+var Cookies = require("cookies");
 
 module.exports = function(app) {
   // Load landing page
@@ -7,6 +8,9 @@ module.exports = function(app) {
   });
 
   app.get("/signin", function(req, res) {
+    var cookies = new Cookies(req, res);
+    console.log(cookies.get("email"));
+    console.log(cookies.get("log"));
     res.render("signin");
   });
 
