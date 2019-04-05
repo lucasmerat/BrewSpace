@@ -6,14 +6,7 @@ module.exports = function(app) {
 
   // Load landing page
   app.get("/", function(req, res) {
-    var cookies = new Cookies(req, res);
-    var log = cookies.get("log");
-    console.log(log);
-    if (log) {
-      res.redirect("/dashboard");
-    } else {
-      res.render("index");
-    }
+    res.render("index");
   });
 
   app.get("/signin", function(req, res) {
