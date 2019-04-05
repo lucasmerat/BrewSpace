@@ -1,10 +1,50 @@
 <nav class="nav-wrapper grey darken-3">
     <div class="container">
-        <a href="/home" className="brand-logo"><i class="fas fa-4x fa-beer text-orange mb-4"></i></a>
+        <a href="/dashboard" className="brand-logo"><i class="fas fa-4x fa-beer text-orange mb-4"></i></a>
         <ul class="right">
-            <li><a href="/api/log">Log a Beer</a></li>
+            <li><button data-target="modal1" class="btn modal-trigger">Log a Beer</button></li>
+            {{!-- <li><a href="/api/log">Log a Beer</a></li> --}}
             {{!-- here we will need to have an action to log the user out from ajax when clicked --}}
             <li><a href="/signin">Log out</a></li> 
         </ul>
     </div>
 </nav>
+
+{{!-- MATERIALIZE MODAL FOR LOG A BEER --}}
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Log a Beer</h4>
+          </div>
+              <p>Type the name of the Beer and what you thought of it.</p>
+            <div class="modal-body">
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="beerLogged"
+                      placeholder="beer name"
+                    />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="commentLogged"
+                      placeholder="comment(optional)"
+                    />
+                  </div>
+                </div>
+      </div>
+          <div class="modal-footer">
+              <a href="#!" class="modal-close btn-flat">Log Beer</a>
+              <a href="#!" class="modal-close btn-flat">Cancel</a>
+            </div>
+  </div>
+
+{{!-- SCRIPT FOR MODAL --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  });
+</script>
