@@ -67,15 +67,22 @@ module.exports = function(app) {
         email: req.body.email
       }
     }).then(function(dbUser) {
-      if (Decrypt(req.body.password, dbUser.password)) {
-        res.json({
-          status: true,
-          email: dbUser.email
-        });
+      if (dbUser) {
+        if (Decrypt(req.body.password, dbUser.password)) {
+          res.json({
+            status: true,
+            email: dbUser.email
+          });
+        } else {
+          res.json({
+            status: false,
+            email: dbUser.email
+          });
+        }
       } else {
+        console.log("Incorrect username or password");
         res.json({
-          status: false,
-          email: dbUser.email
+          error: "Incorrect email or password"
         });
       }
     });
