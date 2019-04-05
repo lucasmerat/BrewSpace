@@ -79,7 +79,6 @@ module.exports = function(app) {
   });
 
   // Log In
-  // eslint-disable-next-line no-unused-vars
   app.post("/api/login", function(req, res) {
     console.log(req.body);
     db.User.findOne({
@@ -101,13 +100,21 @@ module.exports = function(app) {
     });
   });
 
-  //Add beer to database - Probably needs to be deleted
+  //Add beer to database
   app.post("/api/beers", function(req, res) {
     console.log(req.body);
-    db.Beer.create({
-      name: req.body.name
+    db.Beer.findOne({
+      where: { name: req.body.name }
     }).then(function(dbBeer) {
-      res.json(dbBeer);
+      if (dbBeer === null) {
+        db.Beer.create({ name: req.body.name }).then(function(dbBeer) {
+          res.json(dbBeer);
+        });
+      } else {
+        dbBeer.update({ likes: dbBeer.likes + 1 }).then(function(dbBeer) {
+          res.json(dbBeer);
+        });
+      }
     });
   });
 
@@ -128,13 +135,23 @@ module.exports = function(app) {
     })
       .then(function(dbUser) {
         //Req.body must be name:beer...as is going to be added to the beer DB
-        return dbUser.createBeer(req.body);
+        dbUser.createBeer(req.body);
       })
       .then(res.send.bind(res));
   });
 
-  //Check user beers
-  app.get("/api/users/beers/:id", function(req, res) {
+  //Check user total beers
+  app.get("/api/users/total/:id", function(req, res) {
+    db.User.findOne({
+      where: { id: req.params.id },
+      include: [{ model: db.Beer }]
+    }).then(function(dbUser) {
+      res.json(dbUser.Beers.length);
+    });
+  });
+
+  //Check user top beers
+  app.get("/api/users/top/:id", function(req, res) {
     db.User.findOne({
       where: { id: req.params.id },
       include: [{ model: db.Beer }]
@@ -143,10 +160,31 @@ module.exports = function(app) {
     });
   });
 
+  //Check user top beers
+  app.get("/api/users/timeline/:id", function(req, res) {
+    db.User.findOne({
+      where: { id: req.params.id },
+      include: [{ model: db.Beer }]
+    }).then(function(dbUser) {
+      res.json(dbUser.Beers);
+    });
+  });
+
+  //Check top beers overall
+  app.get("/api/beers/top", function(req, res) {
+    db.Beer.findAll({
+      include: [{ model: db.User }]
+    }).then(function(dbBeer) {
+      res.json(BeerReduction(dbBeer));
+    });
+  });
+
   //Check beers
   app.get("/api/beers", function(req, res) {
-    db.Beer.findAll({}).then(function(dbBeer) {
-      res.json(BeerReduction(dbBeer));
+    db.Beer.findAll({
+      include: [{ model: db.User }]
+    }).then(function(dbBeer) {
+      res.json(dbBeer);
     });
   });
 };
