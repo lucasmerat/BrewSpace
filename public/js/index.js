@@ -131,6 +131,14 @@ function deleteCookie(value, variable) {
   document.cookie =
     variable + "=" + cookievalue + "expires=" + now.toUTCString() + ";";
 }
+//Log Out,
+$(".logout").on("click", function(event) {
+  event.preventDefault();
+  var logged = ReadCookie();
+  deleteCookie(logged.email, "email");
+  deleteCookie(logged.log, "log");
+  window.location.pathname = "/";
+});
 
 $(".create-user").on("submit", function(event) {
   // Make sure to preventDefault on a submit event.

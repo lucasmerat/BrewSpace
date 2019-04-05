@@ -1,4 +1,4 @@
-var db = require("../models");
+// var db = require("../models");
 var Cookies = require("cookies");
 
 module.exports = function(app) {
