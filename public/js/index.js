@@ -118,7 +118,6 @@ function ReadCookie() {
   if (cookiearray.length > 0) {
     email = cookiearray[0].split("=")[1];
     log = cookiearray[1].split("=")[1];
-
     return { email: email, log: log };
   } else {
     return { log: false };
@@ -152,11 +151,12 @@ $(".create-user").on("submit", function(event) {
   };
 
   // Send the POST request.
-  $.ajax("/api/signin", {
+  $.ajax("/api/signup", {
     type: "POST",
     data: newUser
   }).then(function() {
     console.log("Created new user");
+    window.location.pathname = "/signin";
   });
 });
 
@@ -179,7 +179,7 @@ $(".login-user").on("submit", function(event) {
   };
 
   // Send the POST request.
-  $.ajax("/api/login", {
+  $.ajax("/api/signin", {
     type: "POST",
     data: User
   }).then(function(logged) {
@@ -187,6 +187,7 @@ $(".login-user").on("submit", function(event) {
       console.log("User has logged");
       writeCookie(logged.email, "email");
       writeCookie(logged.status, "log");
+      window.location.pathname = "/dashboard";
     } else {
       console.log("Wrong Input");
     }
