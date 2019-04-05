@@ -176,4 +176,17 @@ module.exports = function(app) {
       res.json(dbBeer);
     });
   });
+
+  //Check beers
+  app.get("/api/data", function(req, res) {
+    db.Data.findAll({
+      where: {
+        name: {
+          $like: "%" + req.body.name + "%"
+        }
+      }
+    }).then(function(dbData) {
+      res.json(dbData);
+    });
+  });
 };
