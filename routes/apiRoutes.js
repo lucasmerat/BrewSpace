@@ -55,6 +55,10 @@ module.exports = function(app) {
       BeersComplete.push(BeerResults);
       BeerResults = {};
     }
+    BeersComplete.sort(function(a, b) {
+      return b.Quantity - a.Quantity;
+    });
+
     return BeersComplete;
   };
 
