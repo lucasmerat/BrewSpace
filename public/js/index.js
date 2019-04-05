@@ -232,3 +232,44 @@ $.ajax("/api/beers/top", {
     $(".topBeers").append(item);
   }
 });
+
+//Populate Beers Timeline
+$.ajax("/api/beers", {
+  type: "GET"
+}).then(function(Beers) {
+  var Quantity = 5;
+  if (Beers.length < Quantity) {
+    Quantity = Beers.length;
+  }
+  var BeerNames = [];
+  var BeerTimes = [];
+  var UserNames = [];
+  for (var i = 0; i < Quantity; i++) {
+    BeerNames.push(Beers[i].name);
+    BeerTimes.push(Beers[i].createdAt);
+    var UserPath = "/api/users/" + Beers[i].UserId;
+    $.ajax(UserPath, {
+      type: "GET"
+    }).then(function(User) {
+      //Needs to be changed to username once we have it
+      UserNames.push(User.email);
+    });
+  }
+
+  //Create Table
+  setTimeout(function() {
+    for (var i = 0; i < Quantity; i++) {
+      var item =
+        "<li class='collection-item avatar'><i class='material-icons circle green'>insert_chart</i><span class='title'>Username:" +
+        UserNames[i] +
+        " </span><p>Beer Drank:" +
+        BeerNames[i] +
+        "<br>Time:" +
+        Beers[i].createdAt +
+        " <br>Location: <i class='fas fa-1x fa-map-marker-alt text-orange mb-4'></i></p><a data-user=" +
+        UserNames[i] +
+        " class='secondary-content'><i class='material-icons'>View Profile</i></a></li>";
+      $(".timelineUsers").append(item);
+    }
+  }, 300);
+});

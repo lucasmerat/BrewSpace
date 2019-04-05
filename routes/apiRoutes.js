@@ -126,13 +126,21 @@ module.exports = function(app) {
         where: { id: req.params.dataid }
       })
         .then(function(beerData) {
-          console.log(beerData);
-          var Data = {
-            name: beerData.name
-          };
+          var Data = { name: beerData.name };
           dbUser.createBeer(Data);
         })
         .then(res.send.bind(res));
+    });
+  });
+
+  //Check one user
+  app.get("/api/users/:id", function(req, res) {
+    db.User.findOne({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(dbUser) {
+      res.json(dbUser);
     });
   });
 
@@ -156,13 +164,13 @@ module.exports = function(app) {
     });
   });
 
-  //Check user top beers
+  //Check user last beers
   app.get("/api/users/timeline/:id", function(req, res) {
     db.User.findOne({
       where: { id: req.params.id },
       include: [{ model: db.Beer }]
     }).then(function(dbUser) {
-      res.json(dbUser.Beers);
+      res.json(dbUser.Beers.reverse());
     });
   });
 
@@ -180,7 +188,7 @@ module.exports = function(app) {
     db.Beer.findAll({
       include: [{ model: db.User }]
     }).then(function(dbBeer) {
-      res.json(dbBeer);
+      res.json(dbBeer.reverse());
     });
   });
 
