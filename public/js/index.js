@@ -211,3 +211,24 @@ if (logged.email !== undefined) {
   console.log("No one is logged");
 }
 console.log(ReadCookie());
+
+//Populate Top Beers
+$.ajax("/api/beers/top", {
+  type: "GET"
+}).then(function(Beers) {
+  var Quantity = 5;
+  if (Beers.length < Quantity) {
+    Quantity = Beers.length;
+  }
+  for (var i = 0; i < Quantity; i++) {
+    var item =
+      "<li class='collection-item'><div>" +
+      Beers[i].Name +
+      "| Count:" +
+      Beers[i].Quantity +
+      "<a data-name=" +
+      Beers[i].Name +
+      " class='secondary-content'><i class='material-icons'>Info</i></a></div></li>";
+    $(".topBeers").append(item);
+  }
+});
