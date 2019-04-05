@@ -118,7 +118,6 @@ function ReadCookie() {
   if (cookiearray.length > 0) {
     email = cookiearray[0].split("=")[1];
     log = cookiearray[1].split("=")[1];
-
     return { email: email, log: log };
   } else {
     return { log: false };
@@ -132,6 +131,14 @@ function deleteCookie(value, variable) {
   document.cookie =
     variable + "=" + cookievalue + "expires=" + now.toUTCString() + ";";
 }
+//Log Out,
+$(".logout").on("click", function(event) {
+  event.preventDefault();
+  var logged = ReadCookie();
+  deleteCookie(logged.email, "email");
+  deleteCookie(logged.log, "log");
+  window.location.pathname = "/";
+});
 
 $(".create-user").on("submit", function(event) {
   // Make sure to preventDefault on a submit event.
@@ -152,11 +159,12 @@ $(".create-user").on("submit", function(event) {
   };
 
   // Send the POST request.
-  $.ajax("/api/signin", {
+  $.ajax("/api/signup", {
     type: "POST",
     data: newUser
   }).then(function() {
     console.log("Created new user");
+    window.location.pathname = "/signin";
   });
 });
 
@@ -179,7 +187,7 @@ $(".login-user").on("submit", function(event) {
   };
 
   // Send the POST request.
-  $.ajax("/api/login", {
+  $.ajax("/api/signin", {
     type: "POST",
     data: User
   }).then(function(logged) {
@@ -187,6 +195,7 @@ $(".login-user").on("submit", function(event) {
       console.log("User has logged");
       writeCookie(logged.email, "email");
       writeCookie(logged.status, "log");
+      window.location.pathname = "/dashboard";
     } else {
       console.log("Wrong Input");
     }

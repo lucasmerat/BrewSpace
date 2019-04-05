@@ -2,29 +2,6 @@ var db = require("../models");
 var Encryption = require("../functions/bcrypt.js");
 
 module.exports = function(app) {
-  // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.json(dbExamples);
-    });
-  });
-
-  // Create a new example
-  app.post("/api/examples", function(req, res) {
-    db.Example.create(req.body).then(function(dbExample) {
-      res.json(dbExample);
-    });
-  });
-
-  // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(
-      dbExample
-    ) {
-      res.json(dbExample);
-    });
-  });
-
   var BeerReduction = function(array) {
     var Beers = [];
     var BeerNames = [];
@@ -64,7 +41,7 @@ module.exports = function(app) {
 
   // Create User
   // eslint-disable-next-line no-unused-vars
-  app.post("/api/signin", function(req, res) {
+  app.post("/api/signup", function(req, res) {
     console.log(Encryption);
     db.User.findOne({
       where: {
@@ -83,7 +60,7 @@ module.exports = function(app) {
   });
 
   // Log In
-  app.post("/api/login", function(req, res) {
+  app.post("/api/signin", function(req, res) {
     console.log(req.body);
     db.User.findOne({
       where: {
@@ -132,16 +109,24 @@ module.exports = function(app) {
   });
 
   //Add beer to user and database at the same time!!!
-  app.put("/api/users/:id", function(req, res) {
+  app.put("/api/users/:id/:dataid", function(req, res) {
     db.User.findOne({
       where: { id: req.params.id },
       include: [{ model: db.Beer }]
-    })
-      .then(function(dbUser) {
-        //Req.body must be name:beer...as is going to be added to the beer DB
-        dbUser.createBeer(req.body);
+    }).then(function(dbUser) {
+      //Req.body must be name:beer...as is going to be added to the beer DB
+      db.Data.findOne({
+        where: { id: req.params.dataid }
       })
-      .then(res.send.bind(res));
+        .then(function(beerData) {
+          console.log(beerData);
+          var Data = {
+            name: beerData.name
+          };
+          dbUser.createBeer(Data);
+        })
+        .then(res.send.bind(res));
+    });
   });
 
   //Check user total beers
