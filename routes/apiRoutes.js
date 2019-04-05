@@ -179,14 +179,28 @@ module.exports = function(app) {
 
   //Check beers
   app.get("/api/data", function(req, res) {
+    var searchTerm = req.body.name.trim();
     db.Data.findAll({
       where: {
         name: {
-          $like: "%" + req.body.name + "%"
+          $like: "%" + searchTerm + "%"
         }
       }
     }).then(function(dbData) {
-      res.json(dbData);
+      if (dbData.length === 0) {
+        searchTerm = searchTerm.substring(0, searchTerm.length - 1);
+        db.Data.findAll({
+          where: {
+            name: {
+              $like: "%" + searchTerm + "%"
+            }
+          }
+        }).then(function(dbDataMin) {
+          res.json(dbDataMin);
+        });
+      } else {
+        res.json(dbData);
+      }
     });
   });
 };
