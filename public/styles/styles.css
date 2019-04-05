@@ -2,11 +2,11 @@
   line-height: 2.5;
 }
 
-.btn:hover {
-  background-color: #ee3e0d !important;
+.btn:hover, .btn-small:hover {
+  background-color: #dc7f15 !important;
 }
 
-.btn{
+.btn, .btn-small {
   background-color:#f28e1c;
 }
 
@@ -17,7 +17,7 @@ a {
 }
 
 a:hover {
-  color: #f4623a;
+  color: #dc7f15;
 }
 
 .topUserBeers {
@@ -46,4 +46,37 @@ h1, h2, h3, h4, h5, h6,
   font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-weight: 500;
   line-height: 1.2;
+}
+
+.headline {
+  text-decoration: underline;
+}
+
+.stats {
+  padding-left:45px !important;
+}
+
+.fa-clock {
+  padding-left:20px;
+  color: #f28e1c;
+}
+
+.fa-beer {
+  color: #f28e1c;
+}
+
+.numbers {
+    font-weight: 300;
+    color: #fff;
+    background-color:#f28e1c;
+    border-radius: 2px;
+    padding: 3px 6px;
+}
+
+.whole-row {
+  margin-top:24px;
+}
+
+.profile-row {
+  margin-bottom: 0px;
 }
