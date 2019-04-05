@@ -133,6 +133,7 @@ function deleteCookie(value, variable) {
 }
 //Log Out,
 $(".logout").on("click", function(event) {
+  console.log("Logout button clicked");
   event.preventDefault();
   var logged = ReadCookie();
   deleteCookie(logged.email, "email");
