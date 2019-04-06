@@ -88,24 +88,6 @@ module.exports = function(app) {
     });
   });
 
-  //Add beer to database
-  app.post("/api/beers", function(req, res) {
-    console.log(req.body);
-    db.Beer.findOne({
-      where: { name: req.body.name }
-    }).then(function(dbBeer) {
-      if (dbBeer === null) {
-        db.Beer.create({ name: req.body.name }).then(function(dbBeer) {
-          res.json(dbBeer);
-        });
-      } else {
-        dbBeer.update({ likes: dbBeer.likes + 1 }).then(function(dbBeer) {
-          res.json(dbBeer);
-        });
-      }
-    });
-  });
-
   //Check users
   app.get("/api/users", function(req, res) {
     db.User.findAll({
@@ -192,7 +174,7 @@ module.exports = function(app) {
     });
   });
 
-  //Check beers
+  //Search a beer from beer database
   app.get("/api/data", function(req, res) {
     var searchTerm = req.body.name.trim();
     db.Data.findAll({
