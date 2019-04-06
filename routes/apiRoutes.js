@@ -45,12 +45,14 @@ module.exports = function(app) {
     console.log(Encryption);
     db.User.findOne({
       where: {
-        email: req.body.email
+        $or: [{ email: req.body.email }, { username: req.body.username }]
       }
     }).then(function(dbUser) {
+      console.log(dbUser);
       if (dbUser === null) {
         db.User.create({
           email: req.body.email,
+          username: req.body.username,
           password: Encrypt(req.body.password)
         }).then(function(dbCreated) {
           res.json(dbCreated);
@@ -71,12 +73,12 @@ module.exports = function(app) {
         if (Decrypt(req.body.password, dbUser.password)) {
           res.json({
             status: true,
-            email: dbUser.email
+            username: dbUser.username
           });
         } else {
           res.json({
             status: false,
-            email: dbUser.email
+            username: dbUser.username
           });
         }
       } else {
@@ -145,9 +147,9 @@ module.exports = function(app) {
   });
 
   //Check user total beers
-  app.get("/api/users/total/:id", function(req, res) {
+  app.get("/api/users/total/:username", function(req, res) {
     db.User.findOne({
-      where: { id: req.params.id },
+      where: { username: req.params.username },
       include: [{ model: db.Beer }]
     }).then(function(dbUser) {
       res.json(dbUser.Beers.length);
@@ -155,9 +157,9 @@ module.exports = function(app) {
   });
 
   //Check user top beers
-  app.get("/api/users/top/:id", function(req, res) {
+  app.get("/api/users/top/:username", function(req, res) {
     db.User.findOne({
-      where: { id: req.params.id },
+      where: { username: req.params.username },
       include: [{ model: db.Beer }]
     }).then(function(dbUser) {
       res.json(BeerReduction(dbUser.Beers));
@@ -165,9 +167,9 @@ module.exports = function(app) {
   });
 
   //Check user last beers
-  app.get("/api/users/timeline/:id", function(req, res) {
+  app.get("/api/users/timeline/:username", function(req, res) {
     db.User.findOne({
-      where: { id: req.params.id },
+      where: { username: req.params.username },
       include: [{ model: db.Beer }]
     }).then(function(dbUser) {
       res.json(dbUser.Beers.reverse());

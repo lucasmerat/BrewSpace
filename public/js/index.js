@@ -18,9 +18,9 @@ function ReadCookie() {
   }
   // Now take key value pair out of this array
   if (cookiearray.length > 0) {
-    email = cookiearray[0].split("=")[1];
+    username = cookiearray[0].split("=")[1];
     log = cookiearray[1].split("=")[1];
-    return { email: email, log: log };
+    return { username: username, log: log };
   } else {
     return { log: false };
   }
@@ -38,7 +38,7 @@ $(".logout").on("click", function(event) {
   console.log("Logout button clicked");
   event.preventDefault();
   var logged = ReadCookie();
-  deleteCookie(logged.email, "email");
+  deleteCookie(logged.username, "username");
   deleteCookie(logged.log, "log");
   window.location.pathname = "/";
 });
@@ -46,17 +46,22 @@ $(".logout").on("click", function(event) {
 $(".create-user").on("submit", function(event) {
   // Make sure to preventDefault on a submit event.
   event.preventDefault();
+  console.log("Click");
   var email = $("#email")
     .val()
     .trim();
   var password = $("#password")
     .val()
     .trim();
-  if (email === "" || password === "") {
+  var username = $("#userName")
+    .val()
+    .trim();
+  if (email === "" || password === "" || username === "") {
     return;
   }
 
   var newUser = {
+    username: username,
     email: email,
     password: password
   };
@@ -65,7 +70,8 @@ $(".create-user").on("submit", function(event) {
   $.ajax("/api/signup", {
     type: "POST",
     data: newUser
-  }).then(function() {
+  }).then(function(signup) {
+    console.log(signup);
     console.log("Created new user");
     window.location.pathname = "/signin";
   });
@@ -96,7 +102,7 @@ $(".login-user").on("submit", function(event) {
   }).then(function(logged) {
     if (logged.status) {
       console.log("User has logged");
-      writeCookie(logged.email, "email");
+      writeCookie(logged.username, "username");
       writeCookie(logged.status, "log");
       window.location.pathname = "/dashboard";
     } else {
@@ -107,7 +113,7 @@ $(".login-user").on("submit", function(event) {
 
 //Check if is already logged
 var logged = ReadCookie();
-if (logged.email !== undefined) {
+if (logged.username !== undefined) {
   console.log("Already logged");
 } else {
   console.log("No one is logged");
@@ -152,12 +158,14 @@ if (path === "/dashboard") {
     for (var i = 0; i < Quantity; i++) {
       BeerNames.push(Beers[i].name);
       BeerTimes.push(Beers[i].createdAt);
+      console.log(Beers[i].UserId);
       var UserPath = "/api/users/" + Beers[i].UserId;
       $.ajax(UserPath, {
         type: "GET"
       }).then(function(User) {
-        //Needs to be changed to username once we have it
-        UserNames.push(User.email);
+        console.log(UserPath);
+        console.log(User);
+        UserNames.push(User.username);
       });
     }
 
@@ -177,5 +185,46 @@ if (path === "/dashboard") {
         $(".timelineUsers").append(item);
       }
     }, 300);
+  });
+}
+
+if (path === "/profile") {
+  var username = ReadCookie().username;
+  console.log(username);
+  $(".usernameTitle").text(username);
+
+  // User total beers
+  $.ajax("/api/users/total/" + username, {
+    type: "GET"
+  }).then(function(Total) {
+    $(".numbersTotal").text(Total);
+  });
+
+  //User top Beers & Unique Beers
+  $.ajax("/api/users/top/" + username, {
+    type: "GET"
+  }).then(function(Top) {
+    $(".numbersUnique").text(Top.length);
+    for (var i = 0; i < 3; i++) {
+      console.log(Top[i].Name, Top[i].Quantity);
+      var item =
+        "<li>" + Top[i].Name + " - " + Top[i].Quantity + " Drinks</li>";
+      $(".userTop").append(item);
+    }
+  });
+
+  //User Timeline
+  $.ajax("/api/users/timeline/" + username, {
+    type: "GET"
+  }).then(function(Timeline) {
+    for (var i = 0; i < 5; i++) {
+      var item =
+        "<li class='collection-item'><i class='fas fa-beer'></i> " +
+        Timeline[i].name +
+        " <i class='fas fa-question-circle grey-text'></i> <span class='right'>" +
+        Timeline[i].createdAt +
+        "</span></li>";
+      $(".userTimeline").append(item);
+    }
   });
 }
