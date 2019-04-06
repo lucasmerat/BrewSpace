@@ -98,14 +98,14 @@ module.exports = function(app) {
   });
 
   //Add beer to user and database at the same time!!!
-  app.put("/api/users/:id/:dataid", function(req, res) {
+  app.put("/api/users/addDrink", function(req, res) {
     db.User.findOne({
-      where: { id: req.params.id },
+      where: { email: req.body.email },
       include: [{ model: db.Beer }]
     }).then(function(dbUser) {
       //Req.body must be name:beer...as is going to be added to the beer DB
       db.Data.findOne({
-        where: { id: req.params.dataid }
+        where: { id: req.body.dataId }
       })
         .then(function(beerData) {
           var Data = { name: beerData.name };
@@ -185,7 +185,6 @@ module.exports = function(app) {
         }
       }
     }).then(function(dbData) {
-      console.log(dbData)
       if (dbData.length === 0) {
         searchTerm = searchTerm.substring(0, searchTerm.length - 1);
         db.Data.findAll({
