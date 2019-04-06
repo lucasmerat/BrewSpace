@@ -179,3 +179,43 @@ if (path === "/dashboard") {
     }, 300);
   });
 }
+
+$(".search-beer").on("click", function() {
+  let beerSearched = $("#beerSearched").val().trim();
+  $.ajax("/api/data/" + beerSearched, {
+    type: "GET"
+  }).then(function(result){
+    $(".table-section").empty()
+    if(result.length > 0){
+      $(".table-section").append(`
+    <table>
+      <thead>
+        <tr>
+          <th>Beer Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody class="search-beer-list">
+
+      </tbody>
+    </table>
+`)
+    result.forEach(function(beer){
+      console.log(beer)
+      $(".search-beer-list").append(`
+      <tr>
+      <td>${beer.name}</td>
+      <td><a class="btn halfway-fab waves-effect waves-light orange right" data-id:"${beer.id}">+</a></td>
+      </tr>
+`)
+    });
+    } else {
+      $(".table-section").append(`<p>Beer not found, try another, or add your own to our database</p>
+      <button class="btn halfway-fab waves-effect waves-light orange">Add beer to database</button>
+      `)
+      
+    }
+    
+    console.log(result)
+  })
+});
