@@ -181,7 +181,7 @@ if (path === "/dashboard") {
 }
 
 $(".search-beer").on("click", function() {
-  let beerSearched = $("#beerSearched").val().trim();
+  var beerSearched = $("#beerSearched").val().trim();
   $.ajax("/api/data/" + beerSearched, {
     type: "GET"
   }).then(function(result){
@@ -205,7 +205,7 @@ $(".search-beer").on("click", function() {
       $(".search-beer-list").append(`
       <tr>
       <td>${beer.name}</td>
-      <td><a class="btn halfway-fab waves-effect waves-light orange right" data-id:"${beer.id}">+</a></td>
+      <td><a id="log-drink" class="btn halfway-fab waves-effect waves-light orange right" data-id="${beer.id}">+</a></td>
       </tr>
 `)
     });
@@ -219,3 +219,19 @@ $(".search-beer").on("click", function() {
     console.log(result)
   })
 });
+
+$(document).on('click', '#log-drink', function(){
+  let index = document.cookie.indexOf(';')
+  let email = document.cookie.slice(6, index)
+  let dataId = $(this).attr("data-id")
+  console.log(dataId)
+  $.ajax("/api/users/addDrink", {
+    type:"PUT",
+    data: {
+      email: email,
+      dataId: dataId
+    }
+  }).then(function(result){
+    console.log(result)
+  })
+})
