@@ -175,8 +175,9 @@ module.exports = function(app) {
   });
 
   //Search a beer from beer database
-  app.get("/api/data", function(req, res) {
-    var searchTerm = req.body.name.trim();
+  app.get("/api/data/:beer", function(req, res) {
+    console.log(req.params.beer);
+    var searchTerm = req.params.beer;
     db.Data.findAll({
       where: {
         name: {
@@ -184,6 +185,7 @@ module.exports = function(app) {
         }
       }
     }).then(function(dbData) {
+      console.log(dbData)
       if (dbData.length === 0) {
         searchTerm = searchTerm.substring(0, searchTerm.length - 1);
         db.Data.findAll({

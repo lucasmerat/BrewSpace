@@ -179,3 +179,24 @@ if (path === "/dashboard") {
     }, 300);
   });
 }
+
+$(".search-beer").on("click", function() {
+  let beerSearched = $("#beerSearched").val().trim();
+  $.ajax("/api/data/" + beerSearched, {
+    type: "GET"
+  }).then(function(result){
+    $(".table-section").append(`
+    <table>
+      <thead>
+        <tr>
+          <th>Beer Name</th>
+        </tr>
+      </thead>
+      <tbody>
+      
+      </tbody>
+    </table>
+`)
+    console.log(result)
+  })
+});
