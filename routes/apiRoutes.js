@@ -90,24 +90,6 @@ module.exports = function(app) {
     });
   });
 
-  //Add beer to database
-  app.post("/api/beers", function(req, res) {
-    console.log(req.body);
-    db.Beer.findOne({
-      where: { name: req.body.name }
-    }).then(function(dbBeer) {
-      if (dbBeer === null) {
-        db.Beer.create({ name: req.body.name }).then(function(dbBeer) {
-          res.json(dbBeer);
-        });
-      } else {
-        dbBeer.update({ likes: dbBeer.likes + 1 }).then(function(dbBeer) {
-          res.json(dbBeer);
-        });
-      }
-    });
-  });
-
   //Check users
   app.get("/api/users", function(req, res) {
     db.User.findAll({
@@ -118,14 +100,14 @@ module.exports = function(app) {
   });
 
   //Add beer to user and database at the same time!!!
-  app.put("/api/users/:id/:dataid", function(req, res) {
+  app.put("/api/users/addDrink", function(req, res) {
     db.User.findOne({
-      where: { id: req.params.id },
+      where: { email: req.body.email },
       include: [{ model: db.Beer }]
     }).then(function(dbUser) {
       //Req.body must be name:beer...as is going to be added to the beer DB
       db.Data.findOne({
-        where: { id: req.params.dataid }
+        where: { id: req.body.dataId }
       })
         .then(function(beerData) {
           var Data = { name: beerData.name };
@@ -194,9 +176,10 @@ module.exports = function(app) {
     });
   });
 
-  //Check beers
-  app.get("/api/data", function(req, res) {
-    var searchTerm = req.body.name.trim();
+  //Search a beer from beer database
+  app.get("/api/data/:beer", function(req, res) {
+    console.log(req.params.beer);
+    var searchTerm = req.params.beer;
     db.Data.findAll({
       where: {
         name: {

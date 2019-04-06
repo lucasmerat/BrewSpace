@@ -228,3 +228,58 @@ if (path === "/profile") {
     }
   });
 }
+$(".search-beer").on("click", function() {
+  var beerSearched = $("#beerSearched").val().trim();
+  $.ajax("/api/data/" + beerSearched, {
+    type: "GET"
+  }).then(function(result){
+    $(".table-section").empty()
+    if(result.length > 0){
+      $(".table-section").append(`
+    <table>
+      <thead>
+        <tr>
+          <th>Beer Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody class="search-beer-list">
+
+      </tbody>
+    </table>
+`)
+    result.forEach(function(beer){
+      console.log(beer)
+      $(".search-beer-list").append(`
+      <tr>
+      <td>${beer.name}</td>
+      <td><a id="log-drink" class="btn halfway-fab waves-effect waves-light orange right" data-id="${beer.id}">+</a></td>
+      </tr>
+`)
+    });
+    } else {
+      $(".table-section").append(`<p>Beer not found, try another, or add your own to our database</p>
+      <button class="btn halfway-fab waves-effect waves-light orange">Add beer to database</button>
+      `)
+      
+    }
+    
+    console.log(result)
+  })
+});
+
+$(document).on('click', '#log-drink', function(){
+  let index = document.cookie.indexOf(';')
+  let email = document.cookie.slice(6, index)
+  let dataId = $(this).attr("data-id")
+  console.log(dataId)
+  $.ajax("/api/users/addDrink", {
+    type:"PUT",
+    data: {
+      email: email,
+      dataId: dataId
+    }
+  }).then(function(result){
+    console.log(result)
+  })
+})
