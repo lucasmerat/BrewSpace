@@ -120,8 +120,7 @@ if (logged.username !== undefined) {
 }
 console.log(ReadCookie());
 
-
-function PopulateDashboard(){
+function PopulateDashboard() {
   //Populate Top Beers
   if (path === "/dashboard") {
     $.ajax("/api/beers/top", {
@@ -160,7 +159,10 @@ function PopulateDashboard(){
       var UserNames = [];
       for (var i = 0; i < Quantity; i++) {
         BeerNames.push(Beers[i].name);
-        var convertedDate = moment(Beers[i].createdAt,"YYYY-MM-DD[T]HH:mm:ss.sssZ");
+        var convertedDate = moment(
+          Beers[i].createdAt,
+          "YYYY-MM-DD[T]HH:mm:ss.sssZ"
+        );
         BeerTimes.push(convertedDate.calendar());
         console.log(BeerTimes);
         UserIds.push(Beers[i].UserId);
@@ -169,12 +171,12 @@ function PopulateDashboard(){
       $.ajax("/api/users/", {
         type: "GET"
       }).then(function(User) {
-        for (var j=0;j<5;j++){
-          for (var i=0;i<User.length;i++){
-            if (User[i].id ===UserIds[j]){
+        for (var j = 0; j < 5; j++) {
+          for (var i = 0; i < User.length; i++) {
+            if (User[i].id === UserIds[j]) {
               UserNames.push(User[i].username);
             }
-            if (UserNames.length === 5){
+            if (UserNames.length === 5) {
               return;
             }
           }
@@ -231,7 +233,10 @@ function PopulateUserProfile() {
       type: "GET"
     }).then(function(Timeline) {
       for (var i = 0; i < 5; i++) {
-        var convertedDate = moment(Timeline[i].createdAt,"YYYY-MM-DD[T]HH:mm:ss.sssZ");
+        var convertedDate = moment(
+          Timeline[i].createdAt,
+          "YYYY-MM-DD[T]HH:mm:ss.sssZ"
+        );
         var item =
           "<li class='collection-item'><i class='fas fa-beer'></i> " +
           Timeline[i].name +
@@ -246,7 +251,6 @@ function PopulateUserProfile() {
 PopulateDashboard();
 PopulateUserProfile();
 
-
 $(".search-beer").on("click", function() {
   var beerSearched = $("#beerSearched")
     .val()
@@ -256,35 +260,23 @@ $(".search-beer").on("click", function() {
   }).then(function(result) {
     $(".table-section").empty();
     if (result.length > 0) {
-      $(".table-section").append(`
-    <table>
-      <thead>
-        <tr>
-          <th>Beer Name</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody class="search-beer-list">
-
-      </tbody>
-    </table>
-`);
+      $(".table-section").append(
+        "<table><thead><tr><th>Beer Name</th><th></th></tr></thead><tbody class='search-beer-list'></tbody></table>"
+      );
       result.forEach(function(beer) {
         console.log(beer);
-        $(".search-beer-list").append(`
-      <tr>
-      <td>${beer.name}</td>
-      <td><a id="log-drink" class="btn halfway-fab waves-effect waves-light orange right" data-id="${
-        beer.id
-      }">+</a></td>
-      </tr>
-`);
+        $(".search-beer-list").append(
+          "<tr><td>" +
+            beer.name +
+            "</td><td><a id='log-drink' class='btn halfway-fab waves-effect waves-light orange right' data-id=" +
+            beer.id +
+            ">+</a></td></tr>"
+        );
       });
     } else {
-      $(".table-section")
-        .append(`<p>Beer not found, try another, or add your own to our database</p>
-      <button class="btn halfway-fab waves-effect waves-light orange">Add beer to database</button>
-      `);
+      $(".table-section").append(
+        "<p>Beer not found, try another, or add your own to our database</p><button class='btn halfway-fab waves-effect waves-light orange'>Add beer to database</button>"
+      );
     }
 
     console.log(result);
@@ -292,8 +284,8 @@ $(".search-beer").on("click", function() {
 });
 
 $(document).on("click", "#log-drink", function() {
-  let username = ReadCookie().username;
-  let dataId = $(this).attr("data-id");
+  var username = ReadCookie().username;
+  var dataId = $(this).attr("data-id");
   console.log(dataId);
   $.ajax("/api/users/addDrink", {
     type: "PUT",
@@ -302,6 +294,7 @@ $(document).on("click", "#log-drink", function() {
       dataId: dataId
     }
   }).then(function(result) {
+    console.log(result);
     var path = window.location.pathname;
     window.location.pathname = path;
   });
