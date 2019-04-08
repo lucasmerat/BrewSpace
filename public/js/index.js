@@ -275,7 +275,7 @@ $(".search-beer").on("click", function() {
       });
     } else {
       $(".table-section").append(
-        "<p>Beer not found, try another, or add your own to our database</p><button class='btn halfway-fab waves-effect waves-light orange'>Add beer to database</button>"
+        "<p>Beer not found, try another, or add your own to our database</p><button data-target='modal2' id='add-to-db'class='btn halfway-fab waves-effect waves-light orange modal-close modal-trigger'>Add beer to database</button>"
       );
     }
 
@@ -286,16 +286,33 @@ $(".search-beer").on("click", function() {
 $(document).on("click", "#log-drink", function() {
   var username = ReadCookie().username;
   var dataId = $(this).attr("data-id");
-  console.log(dataId);
   $.ajax("/api/users/addDrink", {
     type: "PUT",
     data: {
       username: username,
       dataId: dataId
     }
-  }).then(function(result) {
-    console.log(result);
+  }).then(function() {
     var path = window.location.pathname;
     window.location.pathname = path;
+  });
+});
+
+$(document).on("click", ".add-beer-data", function() {
+  let beerName = $("#beer-data-name")
+    .val()
+    .trim();
+  let beerDescription = $("#beer-data-description")
+    .val()
+    .trim();
+
+  $.ajax("/api/data", {
+    type: "POST",
+    data: {
+      name: beerName,
+      description: beerDescription
+    }
+  }).then(function(result) {
+    console.log(result);
   });
 });
