@@ -89,36 +89,44 @@ module.exports = function(app) {
       },
       include: [{ model: db.Beer }]
     }).then(function(dbUser) {
-      var TimeBeers = [];
-      var NameBeers = [];
-      var TimelineBeers = [];
-      var Timeline = [];
-      var BeersInfo = dbUser.Beers.reverse();
-      for (var i = 0; i < 5; i++) {
-        TimeBeers.push(
-          moment(
-            BeersInfo[i].createdAt,
-            "YYYY-MM-DD[T]HH:mm:ss.sssZ"
-          ).calendar()
-        );
-        NameBeers.push(dbUser.Beers[i].name);
-      }
-      for (i = 0; i < NameBeers.length; i++) {
-        TimelineBeers.Name = NameBeers[i];
-        TimelineBeers.Time = TimeBeers[i];
-        Timeline.push(TimelineBeers);
-        TimelineBeers = {};
-      }
+      if (dbUser !== null) {
+        var TimeBeers = [];
+        var NameBeers = [];
+        var TimelineBeers = [];
+        var Timeline = [];
+        var BeersInfo = dbUser.Beers.reverse();
+        var BeerLength = 5;
+        if (BeersInfo.length < BeerLength) {
+          BeerLength = BeersInfo.length;
+        }
+        for (var i = 0; i < BeerLength; i++) {
+          TimeBeers.push(
+            moment(
+              BeersInfo[i].createdAt,
+              "YYYY-MM-DD[T]HH:mm:ss.sssZ"
+            ).calendar()
+          );
+          NameBeers.push(dbUser.Beers[i].name);
+        }
+        for (i = 0; i < NameBeers.length; i++) {
+          TimelineBeers.Name = NameBeers[i];
+          TimelineBeers.Time = TimeBeers[i];
+          Timeline.push(TimelineBeers);
+          TimelineBeers = {};
+        }
 
-      var UserInformation = {
-        User: dbUser,
-        Beers: Timeline,
-        QuantityBeers: dbUser.Beers.length,
-        UniqueBeers: BeerReduction(dbUser.Beers),
-        TopBeers: BeerReduction(dbUser.Beers).slice(0, 3)
-      };
-      console.log(UserInformation.QuantityBeers);
-      res.render("profile", UserInformation);
+        var UserInformation = {
+          User: dbUser,
+          Beers: Timeline,
+          QuantityBeers: dbUser.Beers.length,
+          UniqueBeers: BeerReduction(dbUser.Beers),
+          TopBeers: BeerReduction(dbUser.Beers).slice(0, 3)
+        };
+        console.log(UserInformation.QuantityBeers);
+        res.render("profile", UserInformation);
+      } else {
+        res.render("404");
+      }
     });
   });
 
