@@ -101,7 +101,7 @@ module.exports = function(app) {
     });
   });
 
-  //Add beer to user and database at the same time!!!
+  //Add beer to user and database at the same time
   app.put("/api/users/addDrink", function(req, res) {
     db.User.findOne({
       where: { username: req.body.username },
