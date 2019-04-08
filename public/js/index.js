@@ -252,6 +252,7 @@ PopulateDashboard();
 PopulateUserProfile();
 
 $(".search-beer").on("click", function() {
+  console.log("Search beer button clicked")
   var beerSearched = $("#beerSearched")
     .val()
     .trim();
@@ -284,6 +285,7 @@ $(".search-beer").on("click", function() {
 });
 
 $(document).on("click", "#log-drink", function() {
+  console.log("Log drink button")
   var username = ReadCookie().username;
   var dataId = $(this).attr("data-id");
   $.ajax("/api/users/addDrink", {
@@ -298,12 +300,12 @@ $(document).on("click", "#log-drink", function() {
   });
 });
 
-
 $(document).on("click", "a", function() {
   var dataUser = $(this).attr("data-user");
   if (dataUser !== undefined) {
     window.location.pathname = "/profile/" + dataUser;
   }
+});
 
 $(document).on("click", ".add-beer-data", function() {
   let beerName = $("#beer-data-name")
