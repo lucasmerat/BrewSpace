@@ -102,7 +102,7 @@ module.exports = function(app) {
   //Add beer to user and database at the same time!!!
   app.put("/api/users/addDrink", function(req, res) {
     db.User.findOne({
-      where: { email: req.body.email },
+      where: { username: req.body.username },
       include: [{ model: db.Beer }]
     }).then(function(dbUser) {
       //Req.body must be name:beer...as is going to be added to the beer DB
