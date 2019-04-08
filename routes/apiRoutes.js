@@ -207,7 +207,11 @@ module.exports = function(app) {
   app.post("/api/data", function(req, res) {
     let beerName = req.body.name;
     let beerDescription = req.body.description;
-    console.log(beerName, beerDescription)
-    res.end();
+    db.Data.create({
+      name: beerName,
+      descript: beerDescription
+    }).then(function(result) {
+      res.json(result);
+    });
   });
 };
