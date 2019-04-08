@@ -57,6 +57,8 @@ module.exports = function(app) {
         }).then(function(dbCreated) {
           res.json(dbCreated);
         });
+      } else {
+        res.json(false);
       }
     });
   });
