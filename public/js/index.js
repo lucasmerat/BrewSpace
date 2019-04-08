@@ -285,22 +285,34 @@ $(".search-beer").on("click", function() {
 
 $(document).on("click", "#log-drink", function() {
   var username = ReadCookie().username;
-  console.log(ReadCookie());
   var dataId = $(this).attr("data-id");
-  console.log(dataId);
   $.ajax("/api/users/addDrink", {
     type: "PUT",
     data: {
       username: username,
       dataId: dataId
     }
-  }).then(function(result) {
-    console.log(result);
+  }).then(function() {
     var path = window.location.pathname;
     window.location.pathname = path;
   });
 });
 
-$(document).on("click", "#add-to-db", function() {
-  console.log("Button to add to db clicked");
+$(document).on("click", ".add-beer-data", function() {
+  let beerName = $("#beer-data-name")
+    .val()
+    .trim();
+  let beerDescription = $("#beer-data-description")
+    .val()
+    .trim();
+
+  $.ajax("/api/data", {
+    type: "POST",
+    data: {
+      name: beerName,
+      description: beerDescription
+    }
+  }).then(function(result) {
+    console.log(result);
+  });
 });
