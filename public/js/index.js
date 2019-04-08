@@ -137,8 +137,9 @@ console.log(ReadCookie());
 function PopulateDashboard() {
   //Populate Top Beers
   if (path === "/dashboard") {
-    $(".timelineUsers").empty();
-    $(".topBeers").empty();
+    $(".topBeers").html(
+      "<li class='collection-header'><h4>Timeline For All Users</h4></li>"
+    );
     $.ajax("/api/beers/top", {
       type: "GET"
     }).then(function(Beers) {
@@ -158,10 +159,11 @@ function PopulateDashboard() {
         $(".topBeers").append(item);
       }
     });
-  }
 
-  //Populate Beers Timeline
-  if (path === "/dashboard") {
+    //Populate Beers Timeline
+    $(".timelineUsers").html(
+      "<li class='collection-header'><h4>Top Beers From All Users</h4></li>"
+    );
     $.ajax("/api/beers", {
       type: "GET"
     }).then(function(Beers) {
