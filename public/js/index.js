@@ -132,11 +132,11 @@ function PopulateDashboard() {
     $.ajax("/api/beers/top", {
       type: "GET"
     }).then(function(Beers) {
-      var Quantity = 5;
-      if (Beers.length < Quantity) {
-        Quantity = Beers.length;
+      var limit = 5;
+      if (Beers.length < limit) {
+        limit = Beers.length;
       }
-      for (var i = 0; i < Quantity; i++) {
+      for (var i = 0; i < limit; i++) {
         var item =
           "<li class='collection-item'><div>" +
           Beers[i].Name +
@@ -155,15 +155,15 @@ function PopulateDashboard() {
     $.ajax("/api/beers", {
       type: "GET"
     }).then(function(Beers) {
-      var Quantity = 5;
-      if (Beers.length < Quantity) {
-        Quantity = Beers.length;
+      var limit = 5;
+      if (Beers.length < limit) {
+        limit = Beers.length;
       }
       var BeerNames = [];
       var BeerTimes = [];
       var UserIds = [];
       var UserNames = [];
-      for (var i = 0; i < Quantity; i++) {
+      for (var i = 0; i < limit; i++) {
         BeerNames.push(Beers[i].name);
         var convertedDate = moment(
           Beers[i].createdAt,
@@ -176,13 +176,13 @@ function PopulateDashboard() {
       $.ajax("/api/users/", {
         type: "GET"
       }).then(function(User) {
-        for (var j = 0; j < 5; j++) {
+        for (var j = 0; j < limit; j++) {
           for (var i = 0; i < User.length; i++) {
             if (User[i].id === UserIds[j]) {
               UserNames.push(User[i].username);
             }
-            if (UserNames.length === 5) {
-              for (var i = 0; i < Quantity; i++) {
+            if (UserNames.length === limit) {
+              for (var i = 0; i < limit; i++) {
                 var item =
                   "<li class='collection-item avatar'><i class='material-icons circle green'>insert_chart</i><span class='title'>Username:" +
                   UserNames[i] +
@@ -220,8 +220,12 @@ function PopulateUserProfile() {
       type: "GET"
     }).then(function(Top) {
       $(".numbersUnique").text(Top.length);
-      for (var i = 0; i < 3; i++) {
-        console.log(Top[i].Name, Top[i].Quantity);
+      var limit = 3;
+      if (Top.length < limit) {
+        limit = Top.length;
+      }
+      $(".numberTop").text(limit);
+      for (var i = 0; i < limit; i++) {
         var item =
           "<li>" + Top[i].Name + " - " + Top[i].Quantity + " Drinks</li>";
         $(".userTop").append(item);
@@ -232,7 +236,11 @@ function PopulateUserProfile() {
     $.ajax("/api/users/timeline/" + username, {
       type: "GET"
     }).then(function(Timeline) {
-      for (var i = 0; i < 5; i++) {
+      var limit = 5;
+      if (Timeline.length < limit) {
+        limit = Timeline.length;
+      }
+      for (var i = 0; i < limit; i++) {
         var convertedDate = moment(
           Timeline[i].createdAt,
           "YYYY-MM-DD[T]HH:mm:ss.sssZ"

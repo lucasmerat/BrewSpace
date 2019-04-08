@@ -14,7 +14,7 @@
                                 <span class="card-title usernameTitle">{{User.username}}</span>
                                 <h6><span class="numbersTotal">{{QuantityBeers}}</span> Total Drinks</h3>
                                     <h6><span class="numbersUnique">{{UniqueBeers.length}}</span> Unique Beers</h3>
-                                        <h6 class="headline">Top {{TopBeers.length}} Beers</h6>
+                                        <h6 class="headline">Top <span class="numberTop">{{TopBeers.length}}</span> Beers</h6>
                                         <ul class="userTop">
                                             {{#each TopBeers}}
                                                 <li>{{Name}} - {{Quantity}} Drinks</li>
