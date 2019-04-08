@@ -323,6 +323,7 @@ $(document).on("click", ".add-beer-data", function() {
     }
   }).then(function(result) {
     console.log(result);
+    var path = window.location.pathname;
+    window.location.pathname = path;
   });
-
 });
