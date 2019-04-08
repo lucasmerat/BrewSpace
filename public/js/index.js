@@ -40,7 +40,8 @@ $(".logout").on("click", function(event) {
   var logged = ReadCookie();
   deleteCookie(logged.username, "username");
   deleteCookie(logged.log, "log");
-  window.location.pathname = "/";
+  console.log("Cookie Deleted");
+  window.location.pathname = "";
 });
 
 $(".create-user").on("submit", function(event) {
@@ -71,9 +72,13 @@ $(".create-user").on("submit", function(event) {
     type: "POST",
     data: newUser
   }).then(function(signup) {
-    console.log(signup);
-    console.log("Created new user");
-    window.location.pathname = "/signin";
+    if (!signup) {
+      alert("Username or email already in use");
+    } else {
+      console.log(signup);
+      console.log("Created new user");
+      window.location.pathname = "/signin";
+    }
   });
 });
 
@@ -107,6 +112,7 @@ $(".login-user").on("submit", function(event) {
       window.location.pathname = "/dashboard";
     } else {
       console.log("Wrong Input");
+      alert("Wrong email or password");
     }
   });
 });
@@ -164,7 +170,6 @@ function PopulateDashboard() {
           "YYYY-MM-DD[T]HH:mm:ss.sssZ"
         );
         BeerTimes.push(convertedDate.calendar());
-        console.log(BeerTimes);
         UserIds.push(Beers[i].UserId);
       }
 
@@ -175,30 +180,26 @@ function PopulateDashboard() {
           for (var i = 0; i < User.length; i++) {
             if (User[i].id === UserIds[j]) {
               UserNames.push(User[i].username);
+              console.log(UserNames);
             }
             if (UserNames.length === 5) {
-              return;
+              for (var i = 0; i < Quantity; i++) {
+                var item =
+                  "<li class='collection-item avatar'><i class='material-icons circle green'>insert_chart</i><span class='title'>Username:" +
+                  UserNames[i] +
+                  " </span><p>Beer Drank:" +
+                  BeerNames[i] +
+                  "<br>Time:" +
+                  BeerTimes[i] +
+                  " <br>Location: <i class='fas fa-1x fa-map-marker-alt text-orange mb-4'></i></p><a data-user=" +
+                  UserNames[i] +
+                  " class='secondary-content'><i class='material-icons'>View Profile</i></a></li>";
+                $(".timelineUsers").append(item);
+              }
             }
           }
         }
       });
-
-      //Create Table
-      setTimeout(function() {
-        for (var i = 0; i < Quantity; i++) {
-          var item =
-            "<li class='collection-item avatar'><i class='material-icons circle green'>insert_chart</i><span class='title'>Username:" +
-            UserNames[i] +
-            " </span><p>Beer Drank:" +
-            BeerNames[i] +
-            "<br>Time:" +
-            BeerTimes[i] +
-            " <br>Location: <i class='fas fa-1x fa-map-marker-alt text-orange mb-4'></i></p><a data-user=" +
-            UserNames[i] +
-            " class='secondary-content'><i class='material-icons'>View Profile</i></a></li>";
-          $(".timelineUsers").append(item);
-        }
-      }, 50);
     });
   }
 }
@@ -298,4 +299,11 @@ $(document).on("click", "#log-drink", function() {
     var path = window.location.pathname;
     window.location.pathname = path;
   });
+});
+
+$(document).on("click", "a", function() {
+  var dataUser = $(this).attr("data-user");
+  if (dataUser !== undefined) {
+    window.location.pathname = "/profile/" + dataUser;
+  }
 });
