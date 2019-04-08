@@ -5,7 +5,7 @@ function writeCookie(value, variable) {
   now.setMonth(now.getMonth() + 1);
   cookievalue = value + ";";
   document.cookie =
-    variable + "=" + cookievalue + "expires=" + now.toUTCString() + ";";
+    variable + "=" + cookievalue + "expires=" + now.toUTCString() + "; path=/";
 }
 
 function ReadCookie() {
@@ -31,7 +31,7 @@ function deleteCookie(value, variable) {
   now.setMonth(now.getMonth() - 1);
   cookievalue = value + ";";
   document.cookie =
-    variable + "=" + cookievalue + "expires=" + now.toUTCString() + ";";
+    variable + "=" + cookievalue + "expires=" + now.toUTCString() + "; path=/";
 }
 //Log Out,
 $(".logout").on("click", function(event) {
@@ -180,7 +180,6 @@ function PopulateDashboard() {
           for (var i = 0; i < User.length; i++) {
             if (User[i].id === UserIds[j]) {
               UserNames.push(User[i].username);
-              console.log(UserNames);
             }
             if (UserNames.length === 5) {
               for (var i = 0; i < Quantity; i++) {

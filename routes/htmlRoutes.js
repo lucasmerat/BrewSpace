@@ -118,7 +118,7 @@ module.exports = function(app) {
         TopBeers: BeerReduction(dbUser.Beers).slice(0, 3)
       };
       console.log(UserInformation.QuantityBeers);
-      res.render("profileError", UserInformation);
+      res.render("profile", UserInformation);
     });
   });
 
