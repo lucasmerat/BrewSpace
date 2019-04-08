@@ -1,4 +1,12 @@
 var path = window.location.pathname;
+let notification = function(message) {
+  $("#notification")
+    .fadeIn("slow")
+    .append(message);
+  setTimeout(function() {
+    $("#notification").fadeOut("slow");
+  }, 3000);
+};
 
 function writeCookie(value, variable) {
   var now = new Date();
@@ -129,6 +137,8 @@ console.log(ReadCookie());
 function PopulateDashboard() {
   //Populate Top Beers
   if (path === "/dashboard") {
+    $(".timelineUsers").empty();
+    $(".topBeers").empty();
     $.ajax("/api/beers/top", {
       type: "GET"
     }).then(function(Beers) {
@@ -204,6 +214,8 @@ function PopulateDashboard() {
 }
 function PopulateUserProfile() {
   if (path === "/profile") {
+    $(".userTop").empty();
+    $(".userTimeline").empty();
     var username = ReadCookie().username;
     console.log(username);
     $(".usernameTitle").text(username);
@@ -252,7 +264,7 @@ PopulateDashboard();
 PopulateUserProfile();
 
 $(".search-beer").on("click", function() {
-  console.log("Search beer button clicked")
+  console.log("Search beer button clicked");
   var beerSearched = $("#beerSearched")
     .val()
     .trim();
@@ -285,7 +297,6 @@ $(".search-beer").on("click", function() {
 });
 
 $(document).on("click", "#log-drink", function() {
-  console.log("Log drink button")
   var username = ReadCookie().username;
   var dataId = $(this).attr("data-id");
   $.ajax("/api/users/addDrink", {
@@ -295,8 +306,12 @@ $(document).on("click", "#log-drink", function() {
       dataId: dataId
     }
   }).then(function() {
-    var path = window.location.pathname;
-    window.location.pathname = path;
+    // var path = window.location.pathname;
+    // window.location.pathname = path;
+    $("#notification").empty();
+    notification("Beer logged!");
+    PopulateDashboard();
+    PopulateUserProfile();
   });
 });
 
@@ -321,9 +336,10 @@ $(document).on("click", ".add-beer-data", function() {
       name: beerName,
       description: beerDescription
     }
-  }).then(function(result) {
-    console.log(result);
-    var path = window.location.pathname;
-    window.location.pathname = path;
+  }).then(function() {
+    $("#notification").empty();
+    notification("Beer Added to Database - try and log it again!");
+    PopulateDashboard();
+    PopulateUserProfile();
   });
 });
