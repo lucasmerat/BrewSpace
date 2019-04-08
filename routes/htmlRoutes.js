@@ -95,7 +95,11 @@ module.exports = function(app) {
         var TimelineBeers = [];
         var Timeline = [];
         var BeersInfo = dbUser.Beers.reverse();
-        for (var i = 0; i < 5; i++) {
+        var BeerLength = 5;
+        if (BeersInfo.length < BeerLength) {
+          BeerLength = BeersInfo.length;
+        }
+        for (var i = 0; i < BeerLength; i++) {
           TimeBeers.push(
             moment(
               BeersInfo[i].createdAt,
