@@ -298,12 +298,12 @@ $(document).on("click", "#log-drink", function() {
   });
 });
 
-
 $(document).on("click", "a", function() {
   var dataUser = $(this).attr("data-user");
   if (dataUser !== undefined) {
     window.location.pathname = "/profile/" + dataUser;
   }
+});
 
 $(document).on("click", ".add-beer-data", function() {
   let beerName = $("#beer-data-name")
@@ -321,6 +321,7 @@ $(document).on("click", ".add-beer-data", function() {
     }
   }).then(function(result) {
     console.log(result);
+    var path = window.location.pathname;
+    window.location.pathname = path;
   });
-
 });
