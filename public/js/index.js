@@ -80,7 +80,7 @@ $(".create-user").on("submit", function(event) {
   }
 
   //Check username length
-  if (username.length >= 14){
+  if (username.length > 14) {
     alert("Username can't be longer than 14 characters");
     return;
   }
