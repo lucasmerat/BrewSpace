@@ -220,9 +220,11 @@ module.exports = function(app) {
   app.post("/api/data", function(req, res) {
     let beerName = req.body.name;
     let beerDescription = req.body.description;
+    let beerAbv = req.body.abv;
     db.Data.create({
       name: beerName,
-      descript: beerDescription
+      descript: beerDescription,
+      abv: beerAbv
     }).then(function(result) {
       res.json(result);
     });

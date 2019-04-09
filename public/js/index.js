@@ -262,7 +262,7 @@ function PopulateUserProfile() {
         var item =
           "<li class='collection-item'><i class='fas fa-beer'></i><span> " +
           Timeline[i].name +
-          " </span><a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-question-circle grey-text'></i></a> <span class='right'>" +
+          " </span><a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a> <span class='right'>" +
           convertedDate.calendar() +
           "</span></li>";
         $(".userTimeline").append(item);
@@ -339,12 +339,16 @@ $(document).on("click", ".add-beer-data", function() {
   let beerDescription = $("#beer-data-description")
     .val()
     .trim();
+  let beerAbv = $("#beer-data-abv")
+    .val()
+    .trim();
 
   $.ajax("/api/data", {
     type: "POST",
     data: {
       name: beerName,
-      description: beerDescription
+      description: beerDescription,
+      abv: beerAbv
     }
   }).then(function() {
     $("#notification").empty();
@@ -362,6 +366,16 @@ $(document).on("click", "#display-beer-info", function() {
   $.ajax("/api/data/display/" + beerName, {
     type: "GET"
   }).then(function(result) {
-    console.log(result);
+    console.log(result)
+    if (result.descript) {
+      $("#beer-description-modal").text(result.descript);
+    } else {
+      $("#beer-description-modal").text("No description available");
+    }
+    if (result.abv) {
+      $("#abv").text("ABV: " + result.abv + "%");
+    } else {
+      $("#abv").text("ABV: No ABV data available");
+    }
   });
 });
