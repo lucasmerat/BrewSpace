@@ -78,6 +78,13 @@ $(".create-user").on("submit", function(event) {
   if (email === "" || password === "" || username === "") {
     return;
   }
+
+  //Check username length
+  if (username.length >= 14){
+    alert("Username can't be longer than 14 characters");
+    return;
+  }
+
   //Check email format
   var emailValidation = new RegExp(
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i
