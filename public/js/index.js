@@ -265,7 +265,11 @@ function PopulateUserProfile() {
       $(".numberTop").text(limit);
       for (var i = 0; i < limit; i++) {
         var item =
-          "<li>" + Top[i].Name + " - " + Top[i].Quantity + " Drinks</li>";
+          "<li class='collection-item'>" +
+          Top[i].Name +
+          "  <span class='right'><span class='fun-beer'>" +
+          Top[i].Quantity +
+          "</span> Drinks</span></li>";
         $(".userTop").append(item);
       }
     });
@@ -289,6 +293,7 @@ function PopulateUserProfile() {
           " </span><a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a> <span class='right'>" +
           convertedDate.calendar() +
           "</span></li>";
+
         $(".userTimeline").append(item);
       }
     });
