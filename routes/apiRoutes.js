@@ -206,12 +206,25 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/api/data/display/:beer", function(req, res) {
+    console.log(req.params);
+    db.Data.findOne({
+      where: {
+        name: req.params.beer
+      }
+    }).then(function(result) {
+      res.json(result);
+    });
+  });
+
   app.post("/api/data", function(req, res) {
     let beerName = req.body.name;
     let beerDescription = req.body.description;
+    let beerAbv = req.body.abv;
     db.Data.create({
       name: beerName,
-      descript: beerDescription
+      descript: beerDescription,
+      abv: beerAbv
     }).then(function(result) {
       res.json(result);
     });

@@ -19,14 +19,16 @@
         </div>
         <p>Search for a beer to log</p>
         <div class="modal-body">
-            <div class="input-group">
-                <input type="text" class="form-control" id="beerSearched" placeholder="Enter a beer..." />
-                <div class="table-section">
+            <div id="add-beer-input-section" class="input-group">
+                <form>
+                    <input type="text" class="form-control" id="beerSearched" placeholder="Enter a beer..." />
+                    <div class="table-section">
 
-                </div>
-
-                <button type="submit" class="search-beer btn-small">Search for Beer</button>
-
+                    </div>
+                    <div id="buttons-section">
+                        <button type='submit' class='search-beer btn-small'>Search for Beer</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -38,16 +40,33 @@
 <div id="modal2" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title" id="myModalLabel">Add beer to Database</h4>
+            <h4 class="modal-title" id="add-beer-title">Add beer to Database</h4>
         </div>
         <p>Type the name of the beer, and a short description</p>
         <div class="modal-body">
             <div class="input-group">
                 <input type="text" class="form-control" id="beer-data-name" placeholder="Beer name..." />
                 <input type="text" class="form-control" id="beer-data-description" placeholder="Description..." />
+                <input type="number" class="form-control" id="beer-data-abv" placeholder="ABV..." />
                 <button type="submit" class="add-beer-data btn-small modal-close">Add beer</button>
 
             </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close btn-flat">Close</a>
+    </div>
+</div>
+
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="beer-info-title"></h4>
+        </div>
+        <p id="beer-info-description"></p>
+        <div class="modal-body">
+            <p id="beer-description-modal"></p>
+            <p id="abv"></p>
         </div>
     </div>
     <div class="modal-footer">
