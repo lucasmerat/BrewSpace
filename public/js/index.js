@@ -273,7 +273,8 @@ function PopulateUserProfile() {
 PopulateDashboard();
 PopulateUserProfile();
 
-$(document).on("click", ".search-beer", function() {
+$(document).on("click", ".search-beer", function(e) {
+  e.preventDefault();
   var beerSearched = $("#beerSearched")
     .val()
     .trim();
