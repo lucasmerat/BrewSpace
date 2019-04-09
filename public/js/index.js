@@ -273,8 +273,7 @@ function PopulateUserProfile() {
 PopulateDashboard();
 PopulateUserProfile();
 
-$(".search-beer").on("click", function() {
-  console.log("Search beer button clicked");
+$(document).on("click", ".search-beer", function() {
   var beerSearched = $("#beerSearched")
     .val()
     .trim();
@@ -282,7 +281,9 @@ $(".search-beer").on("click", function() {
     type: "GET"
   }).then(function(result) {
     $(".table-section").empty();
-    if (result.length > 0) {
+    $("#buttons-section").empty();
+
+    if (result.length > 0 && beerSearched) {
       $(".table-section").append(
         "<table><thead><tr><th>Beer Name</th><th></th></tr></thead><tbody class='search-beer-list'></tbody></table>"
       );
@@ -296,9 +297,15 @@ $(".search-beer").on("click", function() {
             ">+</a></td></tr>"
         );
       });
+      $("#buttons-section").append(
+        "<button type='submit' class='search-beer btn-small'>Search for Beer</button><button data-target='modal2' id='add-to-db'class='btn-small halfway-fab waves-effect waves-light modal-close modal-trigger'>Add another beer to database</button>"
+      );
     } else {
       $(".table-section").append(
-        "<p>Beer not found, try another, or add your own to our database</p><button data-target='modal2' id='add-to-db'class='btn halfway-fab waves-effect waves-light orange modal-close modal-trigger'>Add beer to database</button>"
+        "<p>Beer not found, try another, or add your own to our database</p>"
+      );
+      $("#buttons-section").append(
+        "<button type='submit' class='search-beer btn-small'>Search for Beer</button><button data-target='modal2' id='add-to-db'class='btn-small halfway-fab waves-effect waves-light modal-close modal-trigger'>Add another beer to database</button>"
       );
     }
 
@@ -366,7 +373,7 @@ $(document).on("click", "#display-beer-info", function() {
   $.ajax("/api/data/display/" + beerName, {
     type: "GET"
   }).then(function(result) {
-    console.log(result)
+    console.log(result);
     if (result.descript) {
       $("#beer-description-modal").text(result.descript);
     } else {
