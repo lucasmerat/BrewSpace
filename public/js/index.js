@@ -377,11 +377,17 @@ $(document).on("click", ".add-beer-data", function() {
   let beerAbv = $("#beer-data-abv")
     .val()
     .trim();
+
+  //Check that beerName is not empy
   if (beerName === "") {
+    $("#notification").empty();
+    notification("Beer name can't be empty");
+    console.log("Here");
     return;
   }
   beerName = titleCase(beerName);
 
+  //Check if beer Description is empty
   if (beerDescription !== "") {
     beerDescription =
       beerDescription.charAt(0).toUpperCase() + beerDescription.slice(1);
@@ -399,6 +405,7 @@ $(document).on("click", ".add-beer-data", function() {
     $(".noresults-section").empty();
     $("#beer-data-name").val("");
     $("#beer-data-description").val("");
+    $("#beer-data-abv").val(0);
     //Notification and update info
     $("#notification").empty();
     notification("Beer Added to Database - try and log it again!");
