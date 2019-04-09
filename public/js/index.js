@@ -260,9 +260,9 @@ function PopulateUserProfile() {
           "YYYY-MM-DD[T]HH:mm:ss.sssZ"
         );
         var item =
-          "<li class='collection-item'><i class='fas fa-beer'></i> " +
+          "<li class='collection-item'><i class='fas fa-beer'></i><span> " +
           Timeline[i].name +
-          " <a id='display-beer-info modal-trigger' data-target='modal3'><i class='fas fa-question-circle grey-text'></i></a> <span class='right'>" +
+          " </span><a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-question-circle grey-text'></i></a> <span class='right'>" +
           convertedDate.calendar() +
           "</span></li>";
         $(".userTimeline").append(item);
@@ -354,6 +354,14 @@ $(document).on("click", ".add-beer-data", function() {
   });
 });
 
-$(document).on("click", "#display-beer-info", function(){
-  console.log("Clicked!");
+$(document).on("click", "#display-beer-info", function() {
+  let beerName = $(this)
+    .siblings()[1]
+    .innerText.trim();
+  $("#beer-info-title").text(beerName);
+  $.ajax("/api/data/display/" + beerName, {
+    type: "GET"
+  }).then(function(result) {
+    console.log(result);
+  });
 });
