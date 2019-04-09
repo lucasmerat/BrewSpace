@@ -41,6 +41,15 @@ function deleteCookie(value, variable) {
   document.cookie =
     variable + "=" + cookievalue + "expires=" + now.toUTCString() + "; path=/";
 }
+
+function titleCase(str) {
+  var splitStr = str.toLowerCase().split(" ");
+  for (var i = 0; i < splitStr.length; i++) {
+    splitStr[i] =
+      splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+  }
+  return splitStr.join(" ");
+}
 //Log Out,
 $(".logout").on("click", function(event) {
   console.log("Logout button clicked");
@@ -65,10 +74,36 @@ $(".create-user").on("submit", function(event) {
   var username = $("#userName")
     .val()
     .trim();
+  //Check for no empty inputs
   if (email === "" || password === "" || username === "") {
     return;
   }
 
+  //Check username length
+  if (username.length > 14) {
+    alert("Username can't be longer than 14 characters");
+    return;
+  }
+
+  //Check email format
+  var emailValidation = new RegExp(
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i
+  );
+  if (!emailValidation.test(email)) {
+    alert("Invalid email");
+    return;
+  }
+
+  //Check password minimum requirements
+  var passwordValidation = new RegExp(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/i
+  );
+  if (!passwordValidation.test(password)) {
+    alert(
+      "Password must be at least 8 characters; must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character "
+    );
+    return;
+  }
   var newUser = {
     username: username,
     email: email,
@@ -83,7 +118,6 @@ $(".create-user").on("submit", function(event) {
     if (!signup) {
       alert("Username or email already in use");
     } else {
-      console.log(signup);
       console.log("Created new user");
       window.location.pathname = "/signin";
     }
@@ -124,15 +158,6 @@ $(".login-user").on("submit", function(event) {
     }
   });
 });
-
-//Check if is already logged
-var logged = ReadCookie();
-if (logged.username !== undefined) {
-  console.log("Already logged");
-} else {
-  console.log("No one is logged");
-}
-console.log(ReadCookie());
 
 function PopulateDashboard() {
   //Populate Top Beers
@@ -219,7 +244,6 @@ function PopulateUserProfile() {
     $(".userTop").empty();
     $(".userTimeline").empty();
     var username = ReadCookie().username;
-    console.log(username);
     $(".usernameTitle").text(username);
 
     // User total beers
@@ -278,6 +302,9 @@ $(document).on("click", ".search-beer", function(e) {
   var beerSearched = $("#beerSearched")
     .val()
     .trim();
+  if (beerSearched === "") {
+    return;
+  }
   $.ajax("/api/data/" + beerSearched, {
     type: "GET"
   }).then(function(result) {
@@ -289,7 +316,6 @@ $(document).on("click", ".search-beer", function(e) {
         "<table><thead><tr><th>Beer Name</th><th></th></tr></thead><tbody class='search-beer-list'></tbody></table>"
       );
       result.forEach(function(beer) {
-        console.log(beer);
         $(".search-beer-list").append(
           "<tr><td>" +
             beer.name +
@@ -309,8 +335,6 @@ $(document).on("click", ".search-beer", function(e) {
         "<button type='submit' class='search-beer btn-small'>Search for Beer</button><button data-target='modal2' id='add-to-db'class='btn-small halfway-fab waves-effect waves-light modal-close modal-trigger'>Add another beer to database</button>"
       );
     }
-
-    console.log(result);
   });
 });
 
@@ -324,8 +348,11 @@ $(document).on("click", "#log-drink", function() {
       dataId: dataId
     }
   }).then(function() {
-    // var path = window.location.pathname;
-    // window.location.pathname = path;
+    //Clean Log Beer section
+    $(".table-section").empty();
+    $("#beerSearched").val("");
+    $(".noresults-section").empty();
+    //Notification and reload data
     $("#notification").empty();
     notification("Beer logged!");
     PopulateDashboard();
@@ -350,6 +377,15 @@ $(document).on("click", ".add-beer-data", function() {
   let beerAbv = $("#beer-data-abv")
     .val()
     .trim();
+  if (beerName === "") {
+    return;
+  }
+  beerName = titleCase(beerName);
+
+  if (beerDescription !== "") {
+    beerDescription =
+      beerDescription.charAt(0).toUpperCase() + beerDescription.slice(1);
+  }
 
   $.ajax("/api/data", {
     type: "POST",
@@ -359,6 +395,11 @@ $(document).on("click", ".add-beer-data", function() {
       abv: beerAbv
     }
   }).then(function() {
+    //Clean add beer to DB
+    $(".noresults-section").empty();
+    $("#beer-data-name").val("");
+    $("#beer-data-description").val("");
+    //Notification and update info
     $("#notification").empty();
     notification("Beer Added to Database - try and log it again!");
     PopulateDashboard();

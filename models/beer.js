@@ -1,6 +1,11 @@
 module.exports = function(sequelize, DataTypes) {
   var Beer = sequelize.define("Beer", {
-    name: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        min: 1
+      }
+    }
   });
 
   Beer.associate = function(models) {

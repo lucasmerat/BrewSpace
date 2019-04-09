@@ -1,8 +1,23 @@
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define("User", {
-    username: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.TEXT
+    username: {
+      type: DataTypes.STRING,
+      validate: {
+        len: [1, 14]
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        is: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      }
+    },
+    password: {
+      type: DataTypes.TEXT,
+      validate: {
+        min: 1
+      }
+    }
   });
 
   User.associate = function(models) {
