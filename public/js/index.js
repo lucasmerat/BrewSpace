@@ -262,7 +262,7 @@ function PopulateUserProfile() {
         var item =
           "<li class='collection-item'><i class='fas fa-beer'></i> " +
           Timeline[i].name +
-          " <i class='fas fa-question-circle grey-text'></i> <span class='right'>" +
+          " <a id='display-beer-info modal-trigger' data-target='modal3'><i class='fas fa-question-circle grey-text'></i></a> <span class='right'>" +
           convertedDate.calendar() +
           "</span></li>";
         $(".userTimeline").append(item);
@@ -291,7 +291,7 @@ $(".search-beer").on("click", function() {
         $(".search-beer-list").append(
           "<tr><td>" +
             beer.name +
-            "</td><td><a id='log-drink' class='btn halfway-fab waves-effect waves-light orange right' data-id=" +
+            "</td><td><a id='log-drink' class='btn halfway-fab waves-effect waves-light orange right modal-close' data-id=" +
             beer.id +
             ">+</a></td></tr>"
         );
@@ -352,4 +352,8 @@ $(document).on("click", ".add-beer-data", function() {
     PopulateDashboard();
     PopulateUserProfile();
   });
+});
+
+$(document).on("click", "#display-beer-info", function(){
+  console.log("Clicked!");
 });
