@@ -284,9 +284,9 @@ function PopulateUserProfile() {
           "YYYY-MM-DD[T]HH:mm:ss.sssZ"
         );
         var item =
-          "<li class='collection-item'><i class='fas fa-beer'></i> " +
+          "<li class='collection-item'><i class='fas fa-beer'></i><span> " +
           Timeline[i].name +
-          " <i class='fas fa-question-circle grey-text'></i> <span class='right'>" +
+          " </span><a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a> <span class='right'>" +
           convertedDate.calendar() +
           "</span></li>";
         $(".userTimeline").append(item);
@@ -297,7 +297,8 @@ function PopulateUserProfile() {
 PopulateDashboard();
 PopulateUserProfile();
 
-$(".search-beer").on("click", function() {
+$(document).on("click", ".search-beer", function(e) {
+  e.preventDefault();
   var beerSearched = $("#beerSearched")
     .val()
     .trim();
@@ -308,7 +309,9 @@ $(".search-beer").on("click", function() {
     type: "GET"
   }).then(function(result) {
     $(".table-section").empty();
-    if (result.length > 0) {
+    $("#buttons-section").empty();
+
+    if (result.length > 0 && beerSearched) {
       $(".table-section").append(
         "<table><thead><tr><th>Beer Name</th><th></th></tr></thead><tbody class='search-beer-list'></tbody></table>"
       );
@@ -316,14 +319,20 @@ $(".search-beer").on("click", function() {
         $(".search-beer-list").append(
           "<tr><td>" +
             beer.name +
-            "</td><td><a id='log-drink' class='btn halfway-fab waves-effect waves-light orange right' data-id=" +
+            "</td><td><a id='log-drink' class='btn halfway-fab waves-effect waves-light orange right modal-close' data-id=" +
             beer.id +
             ">+</a></td></tr>"
         );
       });
+      $("#buttons-section").append(
+        "<button type='submit' class='search-beer btn-small'>Search for Beer</button><button data-target='modal2' id='add-to-db'class='btn-small halfway-fab waves-effect waves-light modal-close modal-trigger'>Add another beer to database</button>"
+      );
     } else {
-      $(".noresults-section").append(
-        "<p>Beer not found, try another, or add your own to our database</p><button data-target='modal2' id='add-to-db'class='btn halfway-fab waves-effect waves-light orange modal-close modal-trigger'>Add beer to database</button><br>"
+      $(".table-section").append(
+        "<p>Beer not found, try another, or add your own to our database</p>"
+      );
+      $("#buttons-section").append(
+        "<button type='submit' class='search-beer btn-small'>Search for Beer</button><button data-target='modal2' id='add-to-db'class='btn-small halfway-fab waves-effect waves-light modal-close modal-trigger'>Add another beer to database</button>"
       );
     }
   });
@@ -365,6 +374,9 @@ $(document).on("click", ".add-beer-data", function() {
   let beerDescription = $("#beer-data-description")
     .val()
     .trim();
+  let beerAbv = $("#beer-data-abv")
+    .val()
+    .trim();
   if (beerName === "") {
     return;
   }
@@ -379,7 +391,8 @@ $(document).on("click", ".add-beer-data", function() {
     type: "POST",
     data: {
       name: beerName,
-      description: beerDescription
+      description: beerDescription,
+      abv: beerAbv
     }
   }).then(function() {
     //Clean add beer to DB
@@ -391,5 +404,27 @@ $(document).on("click", ".add-beer-data", function() {
     notification("Beer Added to Database - try and log it again!");
     PopulateDashboard();
     PopulateUserProfile();
+  });
+});
+
+$(document).on("click", "#display-beer-info", function() {
+  let beerName = $(this)
+    .siblings()[1]
+    .innerText.trim();
+  $("#beer-info-title").text(beerName);
+  $.ajax("/api/data/display/" + beerName, {
+    type: "GET"
+  }).then(function(result) {
+    console.log(result);
+    if (result.descript) {
+      $("#beer-description-modal").text(result.descript);
+    } else {
+      $("#beer-description-modal").text("No description available");
+    }
+    if (result.abv) {
+      $("#abv").text("ABV: " + result.abv + "%");
+    } else {
+      $("#abv").text("ABV: No ABV data available");
+    }
   });
 });
