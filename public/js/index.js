@@ -325,14 +325,14 @@ $(document).on("click", ".search-beer", function(e) {
         );
       });
       $("#buttons-section").append(
-        "<button type='submit' class='search-beer btn-small'>Search for Beer</button><button data-target='modal2' id='add-to-db'class='btn-small halfway-fab waves-effect waves-light modal-close modal-trigger'>Add another beer to database</button>"
+        "<button type='submit' class='search-beer btn-small'>Search for Beer</button><button data-target='modal2' id='add-to-db'class='btn-small halfway-fab waves-effect waves-light modal-close modal-trigger'>Add a beer to DB</button>"
       );
     } else {
       $(".table-section").append(
         "<p>Beer not found, try another, or add your own to our database</p>"
       );
       $("#buttons-section").append(
-        "<button type='submit' class='search-beer btn-small'>Search for Beer</button><button data-target='modal2' id='add-to-db'class='btn-small halfway-fab waves-effect waves-light modal-close modal-trigger'>Add another beer to database</button>"
+        "<button type='submit' class='search-beer btn-small'>Search for Beer</button><button data-target='modal2' id='add-to-db'class='btn-small halfway-fab waves-effect waves-light modal-close modal-trigger'>Add a beer to DB</button>"
       );
     }
   });
@@ -351,7 +351,6 @@ $(document).on("click", "#log-drink", function() {
     //Clean Log Beer section
     $(".table-section").empty();
     $("#beerSearched").val("");
-    $(".noresults-section").empty();
     //Notification and reload data
     $("#notification").empty();
     notification("Beer logged!");
@@ -402,7 +401,6 @@ $(document).on("click", ".add-beer-data", function() {
     }
   }).then(function() {
     //Clean add beer to DB
-    $(".noresults-section").empty();
     $("#beer-data-name").val("");
     $("#beer-data-description").val("");
     $("#beer-data-abv").val(0);
