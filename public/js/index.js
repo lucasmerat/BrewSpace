@@ -221,15 +221,17 @@ function PopulateDashboard() {
             if (UserNames.length === limit) {
               for (var i = 0; i < limit; i++) {
                 var item =
-                  "<li class='collection-item avatar'><i class='material-icons circle green'>insert_chart</i><span class='title'>Username:" +
+                  "<li class='collection-item avatar'><i class='material-icons circle green'>insert_chart</i><span class='title'>" +
+                  "<a data-user=" +
                   UserNames[i] +
-                  " </span><p>Beer Drank:" +
+                  " class=''>" +
+                  UserNames[i] + 
+                  "</a>" +
+                  " </span><p><i class='fas fa-beer'></i> " +
                   BeerNames[i] +
-                  "<br>Time:" +
+                  "<br>" +
                   BeerTimes[i] +
-                  " <br>Location: <i class='fas fa-1x fa-map-marker-alt text-orange mb-4'></i></p><a data-user=" +
-                  UserNames[i] +
-                  " class='secondary-content'><i class='material-icons'>View Profile</i></a></li>";
+                  "</li>";
                 $(".timelineUsers").append(item);
               }
             }
