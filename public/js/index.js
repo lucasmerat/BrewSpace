@@ -252,7 +252,6 @@ function PopulateDashboard() {
     $.ajax("/api/users/total/" + username, {
       type: "GET"
     }).then(function(dbUser) {
-      console.log(dbUser);
       let Total = dbUser.Beers.length;
       $(".profile-image").attr("src", dbUser.image);
       $(".miniprofileTotal").text(Total);
