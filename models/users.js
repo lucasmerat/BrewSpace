@@ -20,7 +20,10 @@ module.exports = function(sequelize, DataTypes) {
     },
     image: {
       type: DataTypes.STRING,
-      defaultValue: "../img/user.png"
+      defaultValue: "../img/user.png",
+      validate: {
+        is: /\.(gif|jpg|jpeg|tiff|png)$/i
+      }
     }
   });
 
