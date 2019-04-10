@@ -176,13 +176,13 @@ function PopulateDashboard() {
       }
       for (var i = 0; i < limit; i++) {
         var item =
-          "<li class='collection-item'><i class='fas fa-beer'></i> <span>" +
+          "<li class='collection-item'><i class='fas fa-beer top-beer-icon'></i> <span>" +
           Beers[i].Name +
-          "</span>| Count:" +
+          "</span> <a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a><br><span class='fun-beer'>" +
           Beers[i].Quantity +
-          "<a data-name=" +
+          "</span> Drinks<a data-name=" +
           Beers[i].Name +
-          " class='secondary-content'><a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a>";
+          " class='secondary-content'>";
         $(".topBeers").append(item);
       }
     });
@@ -235,7 +235,7 @@ function PopulateDashboard() {
                   " class=''>" +
                   UserNames[i] +
                   "</a></b>" +
-                  " </span><p><i class='fas fa-beer'></i> " +
+                  " </span><p><i class='fas fa-beer profile-timeline-beer'></i> " +
                   BeerNames[i] +
                   "<br>" +
                   BeerTimes[i] +
