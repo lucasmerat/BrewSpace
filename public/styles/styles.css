@@ -2,6 +2,36 @@
   line-height: 2.5;
 }
 
+.container {
+width: 90%;
+}
+/* 
+.miniprofile {
+  position: fixed;	
+  top: 65px !important;
+  left: 0px !important; 
+  width: 200px;
+  height: 200px;
+}
+
+.timelineAllUsers {
+  position: fixed;	
+  top: 65px !important;
+  left: 25% !important; 
+  right: 25% !important; 
+  width: 100px;
+  height: 200px;
+}
+
+.topUserBeers {
+  position: fixed;	
+  top: 65px !important;
+  right: 0px !important; 
+  left: 200px !important;
+  width: 50px;
+  height: 200px;
+} */
+
 .btn:hover, .btn-small:hover {
   background-color: #dc7f15 !important;
 }
