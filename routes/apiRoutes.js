@@ -146,7 +146,11 @@ module.exports = function(app) {
       where: { username: req.params.username },
       include: [{ model: db.Beer }]
     }).then(function(dbUser) {
-      res.json(BeerReduction(dbUser.Beers));
+      if (dbUser.Beers.length === 0) {
+        res.json([]);
+      } else {
+        res.json(BeerReduction(dbUser.Beers));
+      }
     });
   });
 

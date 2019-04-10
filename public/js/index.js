@@ -61,6 +61,7 @@ $(".logout").on("click", function(event) {
   window.location.pathname = "";
 });
 
+//Sign Up
 $(".create-user").on("submit", function(event) {
   // Make sure to preventDefault on a submit event.
   event.preventDefault();
@@ -124,6 +125,7 @@ $(".create-user").on("submit", function(event) {
   });
 });
 
+//Log In
 $(".login-user").on("submit", function(event) {
   // Make sure to preventDefault on a submit event.
   event.preventDefault();
@@ -256,6 +258,7 @@ function PopulateUserProfile() {
     $.ajax("/api/users/total/" + username, {
       type: "GET"
     }).then(function(Total) {
+      console.log(Total);
       $(".numbersTotal").text(Total);
     });
 
@@ -284,6 +287,12 @@ function PopulateUserProfile() {
           "  <span class='right'><span class='fun-beer'>" +
           Top[i].Quantity +
           "</span> Drinks</span></li>";
+        $(".userTop").append(item);
+      }
+      //In case there are no beers at all
+      if (limit === 0) {
+        var item =
+          "<li> You haven't added any beers yet, log one above to get started</li>";
         $(".userTop").append(item);
       }
     });
@@ -316,6 +325,7 @@ function PopulateUserProfile() {
 PopulateDashboard();
 PopulateUserProfile();
 
+//Search Beer
 $(document).on("click", ".search-beer", function(e) {
   e.preventDefault();
   var beerSearched = $("#beerSearched")
@@ -357,6 +367,7 @@ $(document).on("click", ".search-beer", function(e) {
   });
 });
 
+//Log Beer to user
 $(document).on("click", "#log-drink", function() {
   var username = ReadCookie().username;
   var dataId = $(this).attr("data-id");
@@ -378,6 +389,7 @@ $(document).on("click", "#log-drink", function() {
   });
 });
 
+//Go to another user profile
 $(document).on("click", "a", function() {
   var dataUser = $(this).attr("data-user");
   if (dataUser !== undefined) {
@@ -385,6 +397,7 @@ $(document).on("click", "a", function() {
   }
 });
 
+//Add beer to DB
 $(document).on("click", ".add-beer-data", function() {
   let beerName = $("#beer-data-name")
     .val()
@@ -431,6 +444,7 @@ $(document).on("click", ".add-beer-data", function() {
   });
 });
 
+//Show beer info
 $(document).on("click", "#display-beer-info", function() {
   let beerName = $(this)
     .siblings()[1]
@@ -481,4 +495,9 @@ $(document).on("click", "#save-photo", function() {
       "<a class='change-photo'>Change profile picture</a>"
     );
   });
+ });
+
+//Go to your profile
+$(document).on("click", ".viewProfile", function() {
+  window.location.pathname = "/profile";
 });
