@@ -95,7 +95,7 @@ module.exports = function(app) {
         var TimelineBeers = [];
         var Timeline = [];
         var BeersInfo = dbUser.Beers.reverse();
-        var BeerLength = 5;
+        var BeerLength = 50;
         var TopBeers = [];
         if (BeersInfo.length < BeerLength) {
           BeerLength = BeersInfo.length;

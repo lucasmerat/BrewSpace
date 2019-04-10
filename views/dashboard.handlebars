@@ -8,21 +8,14 @@
         <div class="card-image">
           <img class="responsive-img" src="img/user.png">
           <span class="card-title">
-            <h4>#Username Mini-Profile</h4>
           </span>
-          <a class="btn-floating halfway-fab waves-effect waves-light red">View Full Profile</a>
+          <a class="viewProfile btn-floating halfway-fab waves-effect waves-light red"> View </a>
         </div>
 
         <div>
           <div class="card-content">
-            <h6><span class="numbersTotal">{{QuantityBeers}}</span> Total Drinks</h3>
-              <h6><span class="numbersUnique">{{UniqueBeers.length}}</span> Unique Beers</h3>
-                <h6 class="headline">Top <span class="numberTop">{{TopBeers.length}}</span> Beers</h6>
-                <ul class="userTop">
-                  {{#each TopBeers}}
-                  <li>{{Name}} - {{Quantity}} Drinks</li>
-                  {{/each}}
-                </ul>
+            <h6><span class="miniprofileTotal">0</span> Total Drinks</h3>
+              <h6><span class="miniprofileUnique">0</span> Unique Beers</h3>
           </div>
         </div>
       </div>
