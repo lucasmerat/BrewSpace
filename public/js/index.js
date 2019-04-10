@@ -252,7 +252,6 @@ function PopulateDashboard() {
     $.ajax("/api/users/total/" + username, {
       type: "GET"
     }).then(function(dbUser) {
-      console.log(dbUser);
       let Total = dbUser.Beers.length;
       $(".profile-image").attr("src", dbUser.image);
       $(".miniprofileTotal").text(Total);
@@ -285,7 +284,6 @@ function PopulateUserProfile() {
     $.ajax("/api/users/getImage/" + username, {
       type: "GET"
     }).then(function(image) {
-      console.log(image);
       $(".profile-image").attr("src", image.image);
     });
 
@@ -338,6 +336,18 @@ function PopulateUserProfile() {
 
         $(".userTimeline").append(item);
       }
+    });
+
+    //Change picture option only on profile
+    $(".add-photo-section").append(
+      "<a class='change-photo'>Change profile picture</a>"
+    );
+    //Click to change picture
+    $(".change-photo").on("click", function() {
+      $(".change-photo").css("display", "none");
+      $(".add-photo-section").append(
+        "<p>Please enter a valid link to a photo in the box below</p><input id='add-image-url' type='url' placeholder='https://website.png' /><button id='save-photo' class='btn-small'>Save photo</button"
+      );
     });
   }
 }
@@ -486,19 +496,24 @@ $(document).on("click", "#display-beer-info", function() {
   });
 });
 
-$(".change-photo").on("click", function() {
-  $(".change-photo").css("display", "none");
-  $(".add-photo-section").append(
-    "<p>Please enter a valid link to a photo in the box below</p><input id='add-image-url' type='url' placeholder='https://website.png' /><button id='save-photo' class='btn-small'>Save photo</button"
-  );
-});
-
+//Change profile picture
 $(document).on("click", "#save-photo", function() {
-  console.log("Clicked");
   let imageUrl = $("#add-image-url")
     .val()
     .trim();
   let userName = ReadCookie().username;
+
+  if (imageUrl === "") {
+    alert("Profile picture can't be empty");
+    return;
+  }
+  if (!/\.(gif|jpg|jpeg|tiff|png)$/i.test(imageUrl)) {
+    alert(
+      "Profile picture must be a valid image format. Must end on .gif, .jpg, .jpeg, .tiff or .png"
+    );
+    return;
+  }
+
   $.ajax("/api/users/addImage", {
     type: "PUT",
     data: {
@@ -506,8 +521,6 @@ $(document).on("click", "#save-photo", function() {
       userName
     }
   }).then(function() {
-    console.log("Clearing");
-
     $(".profile-image").attr("src", imageUrl);
     $(".add-photo-section").empty();
     $(".add-photo-section").append(
