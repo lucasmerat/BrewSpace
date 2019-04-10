@@ -56,8 +56,17 @@ a:hover {
 display: inline-block;
 }
 
+.top-beer-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
 .timelineAllUsers {
   display: inline-block;
+}
+
+.profile-timeline-beer {
+  margin-top: 6px;
 }
 
 body {
