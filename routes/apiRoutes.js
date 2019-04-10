@@ -165,6 +165,7 @@ module.exports = function(app) {
     db.Beer.findAll({
       include: [{ model: db.User }]
     }).then(function(dbBeer) {
+      console.log(dbBeer);
       res.json(BeerReduction(dbBeer));
     });
   });
@@ -180,7 +181,6 @@ module.exports = function(app) {
 
   //Search a beer from beer database
   app.get("/api/data/:beer", function(req, res) {
-    console.log(req.params.beer);
     var searchTerm = req.params.beer;
     db.Data.findAll({
       where: {
