@@ -200,6 +200,7 @@ function PopulateDashboard() {
       var BeerTimes = [];
       var UserIds = [];
       var UserNames = [];
+      var UserImages = [];
       for (var i = 0; i < limit; i++) {
         BeerNames.push(Beers[i].name);
         var convertedDate = moment(
@@ -213,15 +214,20 @@ function PopulateDashboard() {
       $.ajax("/api/users/", {
         type: "GET"
       }).then(function(User) {
+        console.log(User);
         for (var j = 0; j < limit; j++) {
           for (var i = 0; i < User.length; i++) {
             if (User[i].id === UserIds[j]) {
               UserNames.push(User[i].username);
+              UserImages.push(User[i].image);
             }
             if (UserNames.length === limit) {
+              console.log(UserNames[i]);
               for (var i = 0; i < limit; i++) {
                 var item =
-                  "<li class='collection-item avatar'><i class='material-icons circle green'>insert_chart</i><span class='title'>Username:" +
+                  "<li class='collection-item avatar'><img class='responsive-img circle' src='" +
+                  UserImages[i] +
+                  "'></img><span class='title'>Username:" +
                   UserNames[i] +
                   " </span><p>Beer Drank:" +
                   BeerNames[i] +
