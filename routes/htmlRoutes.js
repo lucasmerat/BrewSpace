@@ -97,6 +97,7 @@ module.exports = function(app) {
         var BeersInfo = dbUser.Beers.reverse();
         var BeerLength = 50;
         var TopBeers = [];
+        var NoTopBeers = false;
         if (BeersInfo.length < BeerLength) {
           BeerLength = BeersInfo.length;
         }
@@ -122,12 +123,18 @@ module.exports = function(app) {
             TopBeers = TopBeers.slice(0, 3);
           }
         }
+        //Check if Top Beers is empty
+        if (TopBeers.length === 0) {
+          NoTopBeers = true;
+        }
+
         var UserInformation = {
           User: dbUser,
           Beers: Timeline,
           QuantityBeers: dbUser.Beers.length,
-          UniqueBeers: BeerReduction(dbUser.Beers),
-          TopBeers: TopBeers
+          UniqueBeers: BeerReduction(dbUser.Beers) || [],
+          TopBeers: TopBeers,
+          NoTopBeers: NoTopBeers
         };
         console.log(UserInformation.QuantityBeers);
         res.render("profile", UserInformation);
