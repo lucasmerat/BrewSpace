@@ -1,13 +1,17 @@
 {{> signedinnav}}
 
 <div class="container">
-  <div class="row whole-row">
-    <div class="card z-depth-1 user-profile">
-      <div class="card-content grey-text text-darken-3">
-        <div class="row profile-row">
-          <div class="col s4">
-            <img class="responsive-img" src="../img/user.png" alt="user">
-          </div>
+
+    <div class="row whole-row">
+        <div class="card z-depth-1 user-profile">
+            <div class="card-content grey-text text-darken-3">
+                <div class="row profile-row">
+                    <div id="photo-section" class="col s4 center">
+                        <img class="profile-image responsive-img" src="{{User.image}}" alt="user">
+                        <div class="add-photo-section">
+                        <a class="change-photo">Change profile picture</a>
+                        </div>
+                    </div>
 
           <div class="col s8 stats">
             <div class="row">

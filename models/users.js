@@ -17,6 +17,10 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         min: 1
       }
+    },
+    image: {
+      type: DataTypes.STRING,
+      defaultValue: "../img/user.png"
     }
   });
 

@@ -170,7 +170,7 @@ function PopulateDashboard() {
     $.ajax("/api/beers/top", {
       type: "GET"
     }).then(function(Beers) {
-      var limit = 5;
+      var limit = 50;
       if (Beers.length < limit) {
         limit = Beers.length;
       }
@@ -194,7 +194,7 @@ function PopulateDashboard() {
     $.ajax("/api/beers", {
       type: "GET"
     }).then(function(Beers) {
-      var limit = 50;
+      var limit = 25;
       if (Beers.length < limit) {
         limit = Beers.length;
       }
@@ -202,6 +202,7 @@ function PopulateDashboard() {
       var BeerTimes = [];
       var UserIds = [];
       var UserNames = [];
+      var UserImages = [];
       for (var i = 0; i < limit; i++) {
         BeerNames.push(Beers[i].name);
         var convertedDate = moment(
@@ -215,25 +216,28 @@ function PopulateDashboard() {
       $.ajax("/api/users/", {
         type: "GET"
       }).then(function(User) {
+        console.log(User);
         for (var j = 0; j < limit; j++) {
           for (var i = 0; i < User.length; i++) {
             if (User[i].id === UserIds[j]) {
               UserNames.push(User[i].username);
+              UserImages.push(User[i].image);
             }
             if (UserNames.length === limit) {
+              console.log(UserNames[i]);
               for (var i = 0; i < limit; i++) {
                 var item =
-                  "<li class='collection-item avatar'><i class='material-icons circle green'>insert_chart</i><span class='title'>" +
-                  "<a data-user=" +
+                  "<li class='collection-item avatar'><img class='responsive-img circle' src='" +
+                  UserImages[i] +
+                  "'></img><span class='title'>Username:" +
                   UserNames[i] +
-                  " class=''>" +
-                  UserNames[i] +
-                  "</a>" +
-                  " </span><p><i class='fas fa-beer'></i> " +
+                  " </span><p>Beer Drank:" +
                   BeerNames[i] +
-                  "<br>" +
+                  "<br>Time:" +
                   BeerTimes[i] +
-                  "</li>";
+                  " <br>Location: <i class='fas fa-1x fa-map-marker-alt text-orange mb-4'></i></p><a data-user=" +
+                  UserNames[i] +
+                  " class='secondary-content'><i class='material-icons'>View Profile</i></a></li>";
                 $(".timelineUsers").append(item);
               }
             }
@@ -242,20 +246,6 @@ function PopulateDashboard() {
       });
     });
   }
-
-  //Populate miniProfile
-  var username = ReadCookie().username;
-  $.ajax("/api/users/total/" + username, {
-    type: "GET"
-  }).then(function(Total) {
-    $(".miniprofileTotal").text(Total);
-  });
-
-  $.ajax("/api/users/top/" + username, {
-    type: "GET"
-  }).then(function(Top) {
-    $(".miniprofileUnique").text(Top.length);
-  });
 }
 function PopulateUserProfile() {
   if (path === "/profile") {
@@ -270,6 +260,14 @@ function PopulateUserProfile() {
     }).then(function(Total) {
       console.log(Total);
       $(".numbersTotal").text(Total);
+    });
+
+    //User image
+    $.ajax("/api/users/getImage/" + username, {
+      type: "GET"
+    }).then(function(image) {
+      console.log(image);
+      $(".profile-image").attr("src", image.image);
     });
 
     //User top Beers & Unique Beers
@@ -303,7 +301,7 @@ function PopulateUserProfile() {
     $.ajax("/api/users/timeline/" + username, {
       type: "GET"
     }).then(function(Timeline) {
-      var limit = 50;
+      var limit = 5;
       if (Timeline.length < limit) {
         limit = Timeline.length;
       }
@@ -468,6 +466,37 @@ $(document).on("click", "#display-beer-info", function() {
     }
   });
 });
+
+$(".change-photo").on("click", function() {
+  $(".change-photo").css("display", "none");
+  $(".add-photo-section").append(
+    "<p>Please enter a valid link to a photo in the box below</p><input id='add-image-url' type='url' placeholder='https://website.png' /><button id='save-photo' class='btn-small'>Save photo</button"
+  );
+});
+
+$(document).on("click", "#save-photo", function() {
+  console.log("Clicked");
+  let imageUrl = $("#add-image-url")
+    .val()
+    .trim();
+  let userName = ReadCookie().username;
+  $.ajax("/api/users/addImage", {
+    type: "PUT",
+    data: {
+      imageUrl,
+      userName
+    }
+  }).then(function() {
+    console.log("Clearing");
+
+    $(".profile-image").attr("src", imageUrl);
+    $(".add-photo-section").empty();
+    $(".add-photo-section").append(
+      "<a class='change-photo'>Change profile picture</a>"
+    );
+  });
+ });
+
 //Go to your profile
 $(document).on("click", ".viewProfile", function() {
   window.location.pathname = "/profile";
