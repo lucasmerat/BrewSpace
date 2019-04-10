@@ -1,9 +1,9 @@
 var path = window.location.pathname;
-let notification = function (message) {
+let notification = function(message) {
   $("#notification")
     .fadeIn("slow")
     .append(message);
-  setTimeout(function () {
+  setTimeout(function() {
     $("#notification").fadeOut("slow");
   }, 3000);
 };
@@ -51,7 +51,7 @@ function titleCase(str) {
   return splitStr.join(" ");
 }
 //Log Out,
-$(".logout").on("click", function (event) {
+$(".logout").on("click", function(event) {
   console.log("Logout button clicked");
   event.preventDefault();
   var logged = ReadCookie();
@@ -61,7 +61,7 @@ $(".logout").on("click", function (event) {
   window.location.pathname = "";
 });
 
-$(".create-user").on("submit", function (event) {
+$(".create-user").on("submit", function(event) {
   // Make sure to preventDefault on a submit event.
   event.preventDefault();
   console.log("Click");
@@ -114,7 +114,7 @@ $(".create-user").on("submit", function (event) {
   $.ajax("/api/signup", {
     type: "POST",
     data: newUser
-  }).then(function (signup) {
+  }).then(function(signup) {
     if (!signup) {
       alert("Username or email already in use");
     } else {
@@ -124,7 +124,7 @@ $(".create-user").on("submit", function (event) {
   });
 });
 
-$(".login-user").on("submit", function (event) {
+$(".login-user").on("submit", function(event) {
   // Make sure to preventDefault on a submit event.
   event.preventDefault();
   var email = $("#emailLog")
@@ -146,7 +146,7 @@ $(".login-user").on("submit", function (event) {
   $.ajax("/api/signin", {
     type: "POST",
     data: User
-  }).then(function (logged) {
+  }).then(function(logged) {
     if (logged.status) {
       console.log("User has logged");
       writeCookie(logged.username, "username");
@@ -167,7 +167,7 @@ function PopulateDashboard() {
     );
     $.ajax("/api/beers/top", {
       type: "GET"
-    }).then(function (Beers) {
+    }).then(function(Beers) {
       var limit = 5;
       if (Beers.length < limit) {
         limit = Beers.length;
@@ -191,7 +191,7 @@ function PopulateDashboard() {
     );
     $.ajax("/api/beers", {
       type: "GET"
-    }).then(function (Beers) {
+    }).then(function(Beers) {
       var limit = 5;
       if (Beers.length < limit) {
         limit = Beers.length;
@@ -212,7 +212,7 @@ function PopulateDashboard() {
 
       $.ajax("/api/users/", {
         type: "GET"
-      }).then(function (User) {
+      }).then(function(User) {
         for (var j = 0; j < limit; j++) {
           for (var i = 0; i < User.length; i++) {
             if (User[i].id === UserIds[j]) {
@@ -238,6 +238,20 @@ function PopulateDashboard() {
       });
     });
   }
+
+  //Populate miniProfile
+  var username = ReadCookie().username;
+  $.ajax("/api/users/total/" + username, {
+    type: "GET"
+  }).then(function(Total) {
+    $(".miniprofileTotal").text(Total);
+  });
+
+  $.ajax("/api/users/top/" + username, {
+    type: "GET"
+  }).then(function(Top) {
+    $(".miniprofileUnique").text(Top.length);
+  });
 }
 function PopulateUserProfile() {
   if (path === "/profile") {
@@ -249,14 +263,14 @@ function PopulateUserProfile() {
     // User total beers
     $.ajax("/api/users/total/" + username, {
       type: "GET"
-    }).then(function (Total) {
+    }).then(function(Total) {
       $(".numbersTotal").text(Total);
     });
 
     //User top Beers & Unique Beers
     $.ajax("/api/users/top/" + username, {
       type: "GET"
-    }).then(function (Top) {
+    }).then(function(Top) {
       $(".numbersUnique").text(Top.length);
       var limit = 3;
       if (Top.length < limit) {
@@ -277,7 +291,7 @@ function PopulateUserProfile() {
     //User Timeline
     $.ajax("/api/users/timeline/" + username, {
       type: "GET"
-    }).then(function (Timeline) {
+    }).then(function(Timeline) {
       var limit = 5;
       if (Timeline.length < limit) {
         limit = Timeline.length;
@@ -302,7 +316,7 @@ function PopulateUserProfile() {
 PopulateDashboard();
 PopulateUserProfile();
 
-$(document).on("click", ".search-beer", function (e) {
+$(document).on("click", ".search-beer", function(e) {
   e.preventDefault();
   var beerSearched = $("#beerSearched")
     .val()
@@ -312,7 +326,7 @@ $(document).on("click", ".search-beer", function (e) {
   }
   $.ajax("/api/data/" + beerSearched, {
     type: "GET"
-  }).then(function (result) {
+  }).then(function(result) {
     $(".table-section").empty();
     $("#buttons-section").empty();
 
@@ -320,13 +334,13 @@ $(document).on("click", ".search-beer", function (e) {
       $(".table-section").append(
         "<table><thead><tr><th>Beer Name</th><th></th></tr></thead><tbody class='search-beer-list'></tbody></table>"
       );
-      result.forEach(function (beer) {
+      result.forEach(function(beer) {
         $(".search-beer-list").append(
           "<tr><td>" +
-          beer.name +
-          "</td><td><a id='log-drink' class='btn halfway-fab waves-effect waves-light orange right modal-close' data-id=" +
-          beer.id +
-          ">+</a></td></tr>"
+            beer.name +
+            "</td><td><a id='log-drink' class='btn halfway-fab waves-effect waves-light orange right modal-close' data-id=" +
+            beer.id +
+            ">+</a></td></tr>"
         );
       });
       $("#buttons-section").append(
@@ -343,7 +357,7 @@ $(document).on("click", ".search-beer", function (e) {
   });
 });
 
-$(document).on("click", "#log-drink", function () {
+$(document).on("click", "#log-drink", function() {
   var username = ReadCookie().username;
   var dataId = $(this).attr("data-id");
   $.ajax("/api/users/addDrink", {
@@ -352,7 +366,7 @@ $(document).on("click", "#log-drink", function () {
       username: username,
       dataId: dataId
     }
-  }).then(function () {
+  }).then(function() {
     //Clean Log Beer section
     $(".table-section").empty();
     $("#beerSearched").val("");
@@ -364,14 +378,14 @@ $(document).on("click", "#log-drink", function () {
   });
 });
 
-$(document).on("click", "a", function () {
+$(document).on("click", "a", function() {
   var dataUser = $(this).attr("data-user");
   if (dataUser !== undefined) {
     window.location.pathname = "/profile/" + dataUser;
   }
 });
 
-$(document).on("click", ".add-beer-data", function () {
+$(document).on("click", ".add-beer-data", function() {
   let beerName = $("#beer-data-name")
     .val()
     .trim();
@@ -404,7 +418,7 @@ $(document).on("click", ".add-beer-data", function () {
       description: beerDescription,
       abv: beerAbv
     }
-  }).then(function () {
+  }).then(function() {
     //Clean add beer to DB
     $("#beer-data-name").val("");
     $("#beer-data-description").val("");
@@ -417,14 +431,14 @@ $(document).on("click", ".add-beer-data", function () {
   });
 });
 
-$(document).on("click", "#display-beer-info", function () {
+$(document).on("click", "#display-beer-info", function() {
   let beerName = $(this)
     .siblings()[1]
     .innerText.trim();
   $("#beer-info-title").text(beerName);
   $.ajax("/api/data/display/" + beerName, {
     type: "GET"
-  }).then(function (result) {
+  }).then(function(result) {
     console.log(result);
     if (result.descript) {
       $("#beer-description-modal").text(result.descript);
@@ -437,4 +451,9 @@ $(document).on("click", "#display-beer-info", function () {
       $("#abv").text("ABV: No ABV data available");
     }
   });
+});
+
+$(document).on("click", ".viewProfile", function() {
+  var username = ReadCookie().username;
+  window.location.pathname = "/profile/" + username;
 });
