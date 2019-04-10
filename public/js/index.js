@@ -225,7 +225,7 @@ function PopulateDashboard() {
                   "<a data-user=" +
                   UserNames[i] +
                   " class=''>" +
-                  UserNames[i] + 
+                  UserNames[i] +
                   "</a>" +
                   " </span><p><i class='fas fa-beer'></i> " +
                   BeerNames[i] +
