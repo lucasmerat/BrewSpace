@@ -330,14 +330,14 @@ $(document).on("click", ".search-beer", function(e) {
         );
       });
       $("#buttons-section").append(
-        "<button type='submit' class='search-beer btn-small'>Search for Beer</button><button data-target='modal2' id='add-to-db'class='btn-small halfway-fab waves-effect waves-light modal-close modal-trigger'>Add another beer to database</button>"
+        "<button type='submit' class='search-beer btn-small'>Search for Beer</button><button data-target='modal2' id='add-to-db'class='btn-small halfway-fab waves-effect waves-light modal-close modal-trigger'>Add a beer to DB</button>"
       );
     } else {
       $(".table-section").append(
         "<p>Beer not found, try another, or add your own to our database</p>"
       );
       $("#buttons-section").append(
-        "<button type='submit' class='search-beer btn-small'>Search for Beer</button><button data-target='modal2' id='add-to-db'class='btn-small halfway-fab waves-effect waves-light modal-close modal-trigger'>Add another beer to database</button>"
+        "<button type='submit' class='search-beer btn-small'>Search for Beer</button><button data-target='modal2' id='add-to-db'class='btn-small halfway-fab waves-effect waves-light modal-close modal-trigger'>Add a beer to DB</button>"
       );
     }
   });
@@ -356,7 +356,6 @@ $(document).on("click", "#log-drink", function() {
     //Clean Log Beer section
     $(".table-section").empty();
     $("#beerSearched").val("");
-    $(".noresults-section").empty();
     //Notification and reload data
     $("#notification").empty();
     notification("Beer logged!");
@@ -382,11 +381,17 @@ $(document).on("click", ".add-beer-data", function() {
   let beerAbv = $("#beer-data-abv")
     .val()
     .trim();
+
+  //Check that beerName is not empy
   if (beerName === "") {
+    $("#notification").empty();
+    notification("Beer name can't be empty");
+    console.log("Here");
     return;
   }
   beerName = titleCase(beerName);
 
+  //Check if beer Description is empty
   if (beerDescription !== "") {
     beerDescription =
       beerDescription.charAt(0).toUpperCase() + beerDescription.slice(1);
@@ -401,9 +406,9 @@ $(document).on("click", ".add-beer-data", function() {
     }
   }).then(function() {
     //Clean add beer to DB
-    $(".noresults-section").empty();
     $("#beer-data-name").val("");
     $("#beer-data-description").val("");
+    $("#beer-data-abv").val(0);
     //Notification and update info
     $("#notification").empty();
     notification("Beer Added to Database - try and log it again!");
