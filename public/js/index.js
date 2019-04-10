@@ -168,7 +168,7 @@ function PopulateDashboard() {
     $.ajax("/api/beers/top", {
       type: "GET"
     }).then(function(Beers) {
-      var limit = 5;
+      var limit = 50;
       if (Beers.length < limit) {
         limit = Beers.length;
       }
@@ -192,7 +192,7 @@ function PopulateDashboard() {
     $.ajax("/api/beers", {
       type: "GET"
     }).then(function(Beers) {
-      var limit = 50;
+      var limit = 25;
       if (Beers.length < limit) {
         limit = Beers.length;
       }
@@ -221,17 +221,15 @@ function PopulateDashboard() {
             if (UserNames.length === limit) {
               for (var i = 0; i < limit; i++) {
                 var item =
-                  "<li class='collection-item avatar'><i class='material-icons circle green'>insert_chart</i><span class='title'>" +
-                  "<a data-user=" +
+                  "<li class='collection-item avatar'><i class='material-icons circle green'>insert_chart</i><span class='title'>Username:" +
                   UserNames[i] +
-                  " class=''>" +
-                  UserNames[i] +
-                  "</a>" +
-                  " </span><p><i class='fas fa-beer'></i> " +
+                  " </span><p>Beer Drank:" +
                   BeerNames[i] +
-                  "<br>" +
+                  "<br>Time:" +
                   BeerTimes[i] +
-                  "</li>";
+                  " <br>Location: <i class='fas fa-1x fa-map-marker-alt text-orange mb-4'></i></p><a data-user=" +
+                  UserNames[i] +
+                  " class='secondary-content'><i class='material-icons'>View Profile</i></a></li>";
                 $(".timelineUsers").append(item);
               }
             }
@@ -240,20 +238,6 @@ function PopulateDashboard() {
       });
     });
   }
-
-  //Populate miniProfile
-  var username = ReadCookie().username;
-  $.ajax("/api/users/total/" + username, {
-    type: "GET"
-  }).then(function(Total) {
-    $(".miniprofileTotal").text(Total);
-  });
-
-  $.ajax("/api/users/top/" + username, {
-    type: "GET"
-  }).then(function(Top) {
-    $(".miniprofileUnique").text(Top.length);
-  });
 }
 function PopulateUserProfile() {
   if (path === "/profile") {
@@ -294,7 +278,7 @@ function PopulateUserProfile() {
     $.ajax("/api/users/timeline/" + username, {
       type: "GET"
     }).then(function(Timeline) {
-      var limit = 50;
+      var limit = 5;
       if (Timeline.length < limit) {
         limit = Timeline.length;
       }
@@ -455,7 +439,13 @@ $(document).on("click", "#display-beer-info", function() {
   });
 });
 
-$(document).on("click", ".viewProfile", function() {
-  var username = ReadCookie().username;
-  window.location.pathname = "/profile/" + username;
+$(".change-photo").on("click", function() {
+  console.log("Clicked");
+  $("#photo-section").append(
+    "<p>Please enter a valid link to a photo in the box below"
+  );
+  $(".change-photo").css("display", "none");
+  $("#photo-section").append(
+    "<input type='text' /><button id='save-photo' class='btn-small'>Save photo</button"
+  );
 });
