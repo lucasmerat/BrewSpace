@@ -192,7 +192,7 @@ function PopulateDashboard() {
     $.ajax("/api/beers", {
       type: "GET"
     }).then(function(Beers) {
-      var limit = 5;
+      var limit = 50;
       if (Beers.length < limit) {
         limit = Beers.length;
       }
@@ -225,7 +225,7 @@ function PopulateDashboard() {
                   "<a data-user=" +
                   UserNames[i] +
                   " class=''>" +
-                  UserNames[i] + 
+                  UserNames[i] +
                   "</a>" +
                   " </span><p><i class='fas fa-beer'></i> " +
                   BeerNames[i] +
@@ -294,7 +294,7 @@ function PopulateUserProfile() {
     $.ajax("/api/users/timeline/" + username, {
       type: "GET"
     }).then(function(Timeline) {
-      var limit = 5;
+      var limit = 50;
       if (Timeline.length < limit) {
         limit = Timeline.length;
       }

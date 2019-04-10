@@ -5,17 +5,18 @@
     <div class="col s3">
       <div class="card">
 
-      <div class="card-image">
-        <img class="responsive-img" src="img/user.png">
-        <span class="card-title">
-        </span>
-        <a class="viewProfile btn-floating halfway-fab waves-effect waves-light red"> View </a>
-      </div>
+        <div class="card-image">
+          <img class="responsive-img" src="img/user.png">
+          <span class="card-title">
+          </span>
+          <a class="viewProfile btn-floating halfway-fab waves-effect waves-light red"> View </a>
+        </div>
 
-      <div class="col s3">
-        <div class="card-content">
-          <h6><span class="miniprofileTotal">0</span> Total Drinks</h3>
-            <h6><span class="miniprofileUnique">0</span> Unique Beers</h3>
+        <div class="col s3">
+          <div class="card-content">
+            <h6><span class="miniprofileTotal">0</span> Total Drinks</h3>
+              <h6><span class="miniprofileUnique">0</span> Unique Beers</h3>
+          </div>
         </div>
       </div>
     </div>
@@ -78,7 +79,8 @@
             <div class="col s12">
               <ul class="userTop collection">
                 {{#each TopBeers}}
-                <li class="collection-item"><span>{{Name}}</span><span class="right"><span class="fun-beer">{{Quantity}}</span>
+                <li class="collection-item"><span>{{Name}}</span><span class="right"><span
+                      class="fun-beer">{{Quantity}}</span>
                     drinks</span></li>
                 {{/each}}
               </ul>
