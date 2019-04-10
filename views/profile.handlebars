@@ -6,25 +6,30 @@
             <div class="card-content grey-text text-darken-3">
                 <div class="row profile-row">
                     <div id="photo-section" class="col s4 center">
-                        <img class="responsive-img" src="../img/user.png" alt="user">
+                        <img class="profile-image responsive-img" src="{{User.image}}" alt="user">
+                        <div class="add-photo-section">
                         <a class="change-photo">Change profile picture</a>
+                        </div>
                     </div>
                     <div class="col s8 stats">
                         <div class="row">
                             <div class="col s12">
                                 <span class="card-title usernameTitle">{{User.username}}</span>
                                 <h6><span class="numbersTotal fun-beer">{{QuantityBeers}}</span> Total Drinks</h3>
-                                    <h6><span class="fun-beer numbersUnique">{{UniqueBeers.length}}</span> Unique Beers</h3>
+                                    <h6><span class="fun-beer numbersUnique">{{UniqueBeers.length}}</span> Unique Beers
+                                        </h3>
                                         <h6 class="headline">Top <span class="numberTop">{{TopBeers.length}}</span>
                                             Beers</h6>
                                         <div class="row">
                                             <div class="col s12">
                                                 <ul class="userTop collection">
                                                     {{#each TopBeers}}
-                                                    <li class="collection-item"><span>{{Name}}</span><span class="right"><span class="fun-beer">{{Quantity}}</span> drinks</span></li>
+                                                    <li class="collection-item"><span>{{Name}}</span><span
+                                                            class="right"><span class="fun-beer">{{Quantity}}</span>
+                                                            drinks</span></li>
                                                     {{/each}}
                                                 </ul>
-                                                </div>
+                                            </div>
                                         </div>
 
 

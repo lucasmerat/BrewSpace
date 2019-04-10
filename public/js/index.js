@@ -253,6 +253,14 @@ function PopulateUserProfile() {
       $(".numbersTotal").text(Total);
     });
 
+    //User image
+    $.ajax("/api/users/getImage/" + username, {
+      type: "GET"
+    }).then(function(image) {
+      console.log(image);
+      $(".profile-image").attr("src", image.image);
+    });
+
     //User top Beers & Unique Beers
     $.ajax("/api/users/top/" + username, {
       type: "GET"
@@ -440,12 +448,31 @@ $(document).on("click", "#display-beer-info", function() {
 });
 
 $(".change-photo").on("click", function() {
-  console.log("Clicked");
-  $("#photo-section").append(
-    "<p>Please enter a valid link to a photo in the box below"
-  );
   $(".change-photo").css("display", "none");
-  $("#photo-section").append(
-    "<input type='text' /><button id='save-photo' class='btn-small'>Save photo</button"
+  $(".add-photo-section").append(
+    "<p>Please enter a valid link to a photo in the box below</p><input id='add-image-url' type='url' placeholder='https://website.png' /><button id='save-photo' class='btn-small'>Save photo</button"
   );
+});
+
+$(document).on("click", "#save-photo", function() {
+  console.log("Clicked");
+  let imageUrl = $("#add-image-url")
+    .val()
+    .trim();
+  let userName = ReadCookie().username;
+  $.ajax("/api/users/addImage", {
+    type: "PUT",
+    data: {
+      imageUrl,
+      userName
+    }
+  }).then(function() {
+    console.log("Clearing");
+
+    $(".profile-image").attr("src", imageUrl);
+    $(".add-photo-section").empty();
+    $(".add-photo-section").append(
+      "<a class='change-photo'>Change profile picture</a>"
+    );
+  });
 });

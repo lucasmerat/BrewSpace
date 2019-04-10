@@ -229,4 +229,30 @@ module.exports = function(app) {
       res.json(result);
     });
   });
+
+  app.put("/api/users/addImage", function(req, res) {
+    console.log(req.body.imageUrl);
+    db.User.update(
+      {
+        image: req.body.imageUrl
+      },
+      {
+        where: {
+          username: req.body.userName
+        }
+      }
+    ).then(function(result) {
+      res.json(result);
+    });
+  });
+
+  app.get("/api/users/getImage/:username", function(req, res) {
+    db.User.findOne({
+      where: {
+        username: req.params.username
+      }
+    }).then(function(image) {
+      res.json(image);
+    });
+  });
 };
