@@ -229,15 +229,17 @@ function PopulateDashboard() {
                 var item =
                   "<li class='collection-item avatar'><img class='responsive-img circle' src='" +
                   UserImages[i] +
-                  "'></img><span class='title'>Username:" +
+                  "'></img><span class='title'>" +
+                  "<b><a data-user=" +
                   UserNames[i] +
-                  " </span><p>Beer Drank:" +
+                  " class=''>" +
+                  UserNames[i] +
+                  "</a></b>" +
+                  " </span><p><i class='fas fa-beer'></i> " +
                   BeerNames[i] +
-                  "<br>Time:" +
+                  "<br>" +
                   BeerTimes[i] +
-                  " <br>Location: <i class='fas fa-1x fa-map-marker-alt text-orange mb-4'></i></p><a data-user=" +
-                  UserNames[i] +
-                  " class='secondary-content'><i class='material-icons'>View Profile</i></a></li>";
+                  "</li>";
                 $(".timelineUsers").append(item);
               }
             }
