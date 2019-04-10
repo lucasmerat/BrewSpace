@@ -96,6 +96,7 @@ module.exports = function(app) {
         var Timeline = [];
         var BeersInfo = dbUser.Beers.reverse();
         var BeerLength = 5;
+        var TopBeers = [];
         if (BeersInfo.length < BeerLength) {
           BeerLength = BeersInfo.length;
         }
@@ -114,13 +115,19 @@ module.exports = function(app) {
           Timeline.push(TimelineBeers);
           TimelineBeers = {};
         }
-
+        //Check Top Beers
+        if (dbUser.Beers.length > 0) {
+          var TopBeers = BeerReduction(dbUser.Beers);
+          if (TopBeers.length > 3) {
+            TopBeers = TopBeers.slice(0, 3);
+          }
+        }
         var UserInformation = {
           User: dbUser,
           Beers: Timeline,
           QuantityBeers: dbUser.Beers.length,
           UniqueBeers: BeerReduction(dbUser.Beers),
-          TopBeers: BeerReduction(dbUser.Beers).slice(0, 3)
+          TopBeers: TopBeers
         };
         console.log(UserInformation.QuantityBeers);
         res.render("profile", UserInformation);
