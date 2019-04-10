@@ -170,7 +170,7 @@ function PopulateDashboard() {
     $.ajax("/api/beers/top", {
       type: "GET"
     }).then(function(Beers) {
-      var limit = 50;
+      var limit = 10;
       if (Beers.length < limit) {
         limit = Beers.length;
       }
@@ -194,7 +194,7 @@ function PopulateDashboard() {
     $.ajax("/api/beers", {
       type: "GET"
     }).then(function(Beers) {
-      var limit = 25;
+      var limit = 50;
       if (Beers.length < limit) {
         limit = Beers.length;
       }
@@ -318,7 +318,7 @@ function PopulateUserProfile() {
     $.ajax("/api/users/timeline/" + username, {
       type: "GET"
     }).then(function(Timeline) {
-      var limit = 5;
+      var limit = 50;
       if (Timeline.length < limit) {
         limit = Timeline.length;
       }
