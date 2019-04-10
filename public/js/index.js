@@ -245,8 +245,24 @@ function PopulateDashboard() {
         }
       });
     });
+    //Populate miniProfile
+    var username = ReadCookie().username;
+    $.ajax("/api/users/total/" + username, {
+      type: "GET"
+    }).then(function(dbUser) {
+      console.log(dbUser);
+      let Total = dbUser.Beers.length;
+      $(".miniprofileTotal").text(Total);
+    });
+
+    $.ajax("/api/users/top/" + username, {
+      type: "GET"
+    }).then(function(Top) {
+      $(".miniprofileUnique").text(Top.length);
+    });
   }
 }
+
 function PopulateUserProfile() {
   if (path === "/profile") {
     $(".userTop").empty();
@@ -257,8 +273,8 @@ function PopulateUserProfile() {
     // User total beers
     $.ajax("/api/users/total/" + username, {
       type: "GET"
-    }).then(function(Total) {
-      console.log(Total);
+    }).then(function(dbUser) {
+      let Total = dbUser.Beers.length;
       $(".numbersTotal").text(Total);
     });
 
@@ -495,7 +511,7 @@ $(document).on("click", "#save-photo", function() {
       "<a class='change-photo'>Change profile picture</a>"
     );
   });
- });
+});
 
 //Go to your profile
 $(document).on("click", ".viewProfile", function() {
