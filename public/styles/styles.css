@@ -184,7 +184,7 @@ h6,
     padding-left: 10.5px !important;
   }
 
-  .top-section{
+  .top-section, .userTop{
     text-align:center;
   }
 
@@ -193,6 +193,11 @@ h6,
   }
   
   .user-timeline-time{
+    display: block !important;
+    float: none !important;
+  }
+
+  .user-top-number{
     display: block !important;
     float: none !important;
   }
