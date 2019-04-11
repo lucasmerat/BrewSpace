@@ -165,7 +165,7 @@ function PopulateDashboard() {
   //Populate Top Beers
   if (path === "/dashboard") {
     $(".topBeers").html(
-      "<li class='collection-header'><h4>Top Beers</h4></li>"
+      "<li class='collection-header'><h4>Global Top Beers</h4></li>"
     );
     $.ajax("/api/beers/top", {
       type: "GET"
@@ -176,9 +176,9 @@ function PopulateDashboard() {
       }
       for (var i = 0; i < limit; i++) {
         var item =
-          "<li class='collection-item'><i class='fas fa-beer top-beer-icon'></i> <span>" +
+          "<li class='collection-item'><i class='fas fa-beer top-beer-icon'></i> <b><span>" +
           Beers[i].Name +
-          "</span> <a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a><br><span class='fun-beer'>" +
+          "</span></b> <a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a><br><span class='fun-beer'>" +
           Beers[i].Quantity +
           "</span> Drinks<a data-name=" +
           Beers[i].Name +
@@ -189,7 +189,7 @@ function PopulateDashboard() {
 
     //Populate Beers Timeline
     $(".timelineUsers").html(
-      "<li class='collection-header'><h4>Timeline</h4></li>"
+      "<li class='collection-header'><h4>Global Timeline</h4></li>"
     );
     $.ajax("/api/beers", {
       type: "GET"
@@ -235,9 +235,9 @@ function PopulateDashboard() {
                   " class=''>" +
                   UserNames[i] +
                   "</a></b>" +
-                  " </span><p><i class='fas fa-beer profile-timeline-beer'></i> " +
+                  " </span><p><i class='fas fa-beer profile-timeline-beer'></i> <b>" +
                   BeerNames[i] +
-                  "<br>" +
+                  "</b><br>" +
                   BeerTimes[i] +
                   "</li>";
                 $(".timelineUsers").append(item);
@@ -331,7 +331,7 @@ function PopulateUserProfile() {
         var item =
           "<li class='collection-item'><i class='fas fa-beer'></i><span> " +
           Timeline[i].name +
-          " </span><a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a> <span class='right'>" +
+          " </span><a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a> <span class='right user-timeline-time'>" +
           convertedDate.calendar() +
           "</span></li>";
 

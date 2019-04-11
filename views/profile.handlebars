@@ -1,60 +1,64 @@
 {{> signedinnav}}
 
 <div class="container">
+    <div class="row whole-row">
+        <div class="card z-depth-1 user-profile">
+            <div class="card-content grey-text text-darken-3">
+                <div class="row profile-row">
+                    <div id="photo-section" class="col s12 m4 center">
+                        <img class="profile-image responsive-img" src="{{User.image}}" alt="user">
+                        <div class="add-photo-section">
+                        </div>
+                    </div>
+                    <div class="col s12 m8 stats">
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="top-section">
+                                    <span class="card-title usernameTitle">{{User.username}}</span>
+                                    <h6><span class="numbersTotal fun-beer">{{QuantityBeers}}</span> Total Drinks</h6>
+                                    <h6><span class="fun-beer numbersUnique">{{UniqueBeers.length}}</span> Unique Beers
+                                    </h6>
+                                    <h6 class="headline">Top <span class="numberTop">{{TopBeers.length}}</span>
+                                        Beers</h6>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12">
+                                        <ul class="userTop collection">
+                                            {{#each TopBeers}}
+                                            <li class="collection-item"><span>{{Name}}</span><span class="right"><span
+                                                        class="fun-beer">{{Quantity}}</span>
+                                                    drinks</span></li>
+                                            {{/each}}
+                                        </ul>
+                                    </div>
+                                </div>
 
-  <div class="row whole-row">
-    <div class="card z-depth-1 user-profile">
-      <div class="card-content grey-text text-darken-3">
-        <div class="row profile-row">
-          <div id="photo-section" class="col s12 m4 center">
-            <img class="profile-image responsive-img" src="{{User.image}}" alt="user">
-            <div class="add-photo-section">
-            </div>
-          </div>
 
-          <div class="col s12 m8 stats">
-            <div class="row">
-              <div class="col s12">
-                <span class="card-title usernameTitle">{{User.username}}</span>
-                <h6><span class="numbersTotal fun-beer">{{QuantityBeers}}</span> Total Drinks</h6>
-                <h6><span class="fun-beer numbersUnique">{{UniqueBeers.length}}</span> Unique Beers</h6>
-                <h6 class="headline">Top <span class="numberTop">{{TopBeers.length}} </span> Beers</h6>
-                <div class="row">
-                  <div class="col s12">
-                    <ul class="userTop collection">
-                      {{#each TopBeers}}
-                      <li class="collection-item"><span>{{Name}}</span><span class="right"><span
-                            class="fun-beer">{{Quantity}}</span>
-                          drinks</span></li>
-                      {{/each}}
-                      {{#if NoTopBeers}}
-                      <li>{{User.username}} hasn't added any beers yet</li>
-                      {{/if}}
-                    </ul>
-                  </div>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-
-    <div class="card z-depth-0 user-timeline">
-      <div class="card-content grey-text text-darken-3">
-        <div class="row">
-          <div class="col s12">
-            <h4><i class="far fa-clock"></i>Timeline</h4>
-            <ul class="collection userTimeline">
-              {{#each Beers}}
-              <li class='collection-item'><i class='fas fa-beer'></i><span>{{Name}}</span><a id='display-beer-info'
-                  class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a><span
-                  class='right'>{{Time}}</span></li>
-              {{/each}}
-            </ul>
-          </div>
+        <div class="card z-depth-0 user-timeline">
+            <div class="card-content grey-text text-darken-3">
+                <div class="row">
+                    <div class="col s12 user-timeline-section">
+                        <h4><i class="far fa-clock"></i>Timeline</h4>
+                        <ul class="collection userTimeline">
+                            {{#each Beers}}
+                            <li class="collection-item"><i class="fas fa-beer"></i><span>{{Name}}</span> <a
+                                    id='display-beer-info' class='modal-trigger' data-target='modal3'><i
+                                        class="fas fa-info-circle grey-text"></i></a><span class="user-timeline-time right">{{Time}}</span>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
