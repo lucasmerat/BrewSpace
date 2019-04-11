@@ -300,9 +300,9 @@ function PopulateUserProfile() {
       $(".numberTop").text(limit);
       for (var i = 0; i < limit; i++) {
         var item =
-          "<li class='collection-item'>" +
+          "<li class='collection-item'><b>" +
           Top[i].Name +
-          "  <span class='right'><span class='fun-beer'>" +
+          "</b>  <span class='right user-top-number'><span class='fun-beer'>" +
           Top[i].Quantity +
           "</span> Drinks</span></li>";
         $(".userTop").append(item);
