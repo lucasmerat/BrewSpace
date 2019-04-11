@@ -331,7 +331,7 @@ function PopulateUserProfile() {
         var item =
           "<li class='collection-item'><i class='fas fa-beer'></i><span> " +
           Timeline[i].name +
-          " </span><a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a> <span class='right'>" +
+          " </span><a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a> <span class='right user-timeline-time'>" +
           convertedDate.calendar() +
           "</span></li>";
 
