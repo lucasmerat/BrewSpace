@@ -170,7 +170,7 @@ function PopulateDashboard() {
     $.ajax("/api/beers/top", {
       type: "GET"
     }).then(function(Beers) {
-      var limit = 10;
+      var limit = 5;
       if (Beers.length < limit) {
         limit = Beers.length;
       }
