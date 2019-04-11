@@ -6,13 +6,13 @@
     <div class="card z-depth-1 user-profile">
       <div class="card-content grey-text text-darken-3">
         <div class="row profile-row">
-          <div id="photo-section" class="col s4 center">
+          <div id="photo-section" class="col s12 m4 center">
             <img class="profile-image responsive-img" src="{{User.image}}" alt="user">
             <div class="add-photo-section">
             </div>
           </div>
 
-          <div class="col s8 stats">
+          <div class="col s12 m8 stats">
             <div class="row">
               <div class="col s12">
                 <span class="card-title usernameTitle">{{User.username}}</span>
@@ -48,7 +48,7 @@
             <ul class="collection userTimeline">
               {{#each Beers}}
               <li class='collection-item'><i class='fas fa-beer'></i><span>{{Name}}</span><a id='display-beer-info'
-                  class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a> <span
+                  class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a><span
                   class='right'>{{Time}}</span></li>
               {{/each}}
             </ul>
