@@ -340,6 +340,7 @@ function PopulateUserProfile() {
     });
 
     //Change picture option only on profile
+    $(".add-photo-section").empty();
     $(".add-photo-section").append(
       "<a class='change-photo'>Change profile picture</a>"
     );
