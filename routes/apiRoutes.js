@@ -222,6 +222,8 @@ module.exports = function(app) {
     });
   });
 
+  //Add beer to database
+
   app.post("/api/data", function(req, res) {
     let beerName = req.body.name;
     let beerDescription = req.body.description;
@@ -234,6 +236,8 @@ module.exports = function(app) {
       res.json(result);
     });
   });
+
+  //Add or update profile image
 
   app.put("/api/users/addImage", function(req, res) {
     console.log(req.body.imageUrl);
@@ -250,6 +254,8 @@ module.exports = function(app) {
       res.json(result);
     });
   });
+
+  //Get user profile image
 
   app.get("/api/users/getImage/:username", function(req, res) {
     db.User.findOne({

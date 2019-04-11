@@ -235,9 +235,9 @@ function PopulateDashboard() {
                   " class=''>" +
                   UserNames[i] +
                   "</a></b>" +
-                  " </span><p><i class='fas fa-beer profile-timeline-beer'></i> " +
+                  " </span><p><i class='fas fa-beer profile-timeline-beer'></i> <b>" +
                   BeerNames[i] +
-                  "<br>" +
+                  "</b><br>" +
                   BeerTimes[i] +
                   "</li>";
                 $(".timelineUsers").append(item);
