@@ -48,8 +48,9 @@
                         <h4><i class="far fa-clock"></i>Timeline</h4>
                         <ul class="collection userTimeline">
                             {{#each Beers}}
-                            <li class="collection-item"><i class="fas fa-beer"></i> {{Name}} <i
-                                    class="fas fa-question-circle grey-text"></i> <span class="right">{{Time}}</span>
+                            <li class="collection-item"><i class="fas fa-beer"></i><span>{{Name}}</span> <a
+                                    id='display-beer-info' class='modal-trigger' data-target='modal3'><i
+                                        class="fas fa-info-circle grey-text"></i></a><span class="right">{{Time}}</span>
                             </li>
                             {{/each}}
                         </ul>
