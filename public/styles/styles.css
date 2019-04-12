@@ -13,16 +13,9 @@
   font-size: 20px;
 }
 
-/* 
 .timelineAllUsers {
-  position: fixed;	
-  top: 65px !important;
-  left: 25% !important; 
-  right: 25% !important; 
-  width: 100px;
-  height: 200px;
+  display: inline-block;
 }
- */
 
 .topUserBeers,.topUserDrinkers {
   position: -webkit-sticky;
@@ -37,7 +30,7 @@
   position: sticky;
   top: 0;
   padding: 5px;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .miniprofileUnique {
@@ -99,10 +92,6 @@ a:hover {
 .top-beer-icon {
   /* font-size: 24px; */
   margin-bottom: 2px;
-}
-
-.timelineAllUsers {
-  display: inline-block;
 }
 
 .profile-timeline-beer {

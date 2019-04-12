@@ -165,7 +165,7 @@ function PopulateDashboard() {
   //Populate Top Beers
   if (path === "/dashboard") {
     $(".topBeers").html(
-      "<li class='collection-header'><h4>Global Top Beers</h4></li>"
+      "<li class='collection-header'><h4>Top 5 Beverages</h4></li>"
     );
     $.ajax("/api/beers/top", {
       type: "GET"
@@ -266,7 +266,7 @@ function PopulateDashboard() {
 
     // Top Global Drinkers
     $(".topDrinkers").html(
-      "<li class='collection-header'><h4>Global Top Drinkers</h4></li>"
+      "<li class='collection-header'><h4>Top 5 Drinkers</h4></li>"
     );
     $.ajax("/api/topusers", {
       type: "GET"
@@ -277,7 +277,7 @@ function PopulateDashboard() {
       }
       for (var i = 0; i < limit; i++) {
         var item =
-          "<li class='collection-item'><i class='fas fa-beer top-beer-icon'></i><b><span> " +
+          "<li class='collection-item'><b><span> " +
           Users[i].Name +
           "</span></b><br><div class='top-beer-div'><span class='fun-beer'>" +
           Users[i].Quantity +
