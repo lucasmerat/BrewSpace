@@ -259,6 +259,7 @@ module.exports = function(app) {
       res.json(image);
     });
   });
+
   //Top Drinkers
   app.get("/api/topusers", function(req, res) {
     db.User.findAll({
