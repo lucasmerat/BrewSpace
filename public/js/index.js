@@ -178,7 +178,7 @@ function PopulateDashboard() {
         var item =
           "<li class='collection-item'><b><span class='top-beer-text'>" +
           Beers[i].Name +
-          "</span></b><a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a><br><div class='top-beer-div'><span class='fun-beer'>" +
+          "</span></b> <a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a><br><div class='top-beer-div'><span class='fun-beer'>" +
           Beers[i].Quantity +
           "</span> Drinks</div><a data-name=" +
           Beers[i].Name +
@@ -264,7 +264,7 @@ function PopulateDashboard() {
       $(".miniprofileUnique").text(Top.length);
     });
 
-    // Top Global Drinkers
+    // Populate Top Global Drinkers
     $(".topDrinkers").html(
       "<li class='collection-header'><h4>Top 5 Drinkers</h4></li>"
     );

@@ -51,16 +51,6 @@
   text-align: center;
 }
 
-/* .top-beers-drinks-words {
-margin-top: 20px;
-} */
-
-/* 
- .top-beer-text {
-padding: 5px;
-margin-bottom: 10px;
- } */
-
 .usernameTitle {
   font-weight: bold !important;
 }
@@ -86,16 +76,30 @@ a {
 }
 
 a:hover {
-  color: #dc7f15;
+  color: black;
+}
+
+#log-drink {
+  font-size: 30px;
+}
+
+#log-drink:hover {
+  font-size: 40px;
+}
+
+.fa-info-circle:hover {
+  color: #f28e1c!important;
+}
+
+.top-beer-div {
+ font-size: 14px;
 }
 
 .topUserBeers {
-  /* float: right; */
   display: inline-block;
 }
 
 .top-beer-icon {
-  /* font-size: 24px; */
   margin-bottom: 2px;
 }
 
@@ -165,11 +169,6 @@ h6,
 .top-beer-div {
 margin-top: 10px;
 }
-
-/* #display-beer-info {
-  margin-bottom: 10px !important;
-  
-} */
 
 .whole-row {
   margin-top: 24px;
