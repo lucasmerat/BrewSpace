@@ -28,7 +28,6 @@ module.exports = function(app) {
     for (i = 0; i < BeerNames.length; i++) {
       BeerResults.Name = BeerNames[i];
       BeerResults.Quantity = BeerQuantity[i];
-      console.log(BeerResults);
       BeersComplete.push(BeerResults);
       BeerResults = {};
     }
@@ -48,7 +47,6 @@ module.exports = function(app) {
         $or: [{ email: req.body.email }, { username: req.body.username }]
       }
     }).then(function(dbUser) {
-      console.log(dbUser);
       if (dbUser === null) {
         db.User.create({
           email: req.body.email,
@@ -65,7 +63,6 @@ module.exports = function(app) {
 
   // Log In
   app.post("/api/signin", function(req, res) {
-    console.log(req.body);
     db.User.findOne({
       where: {
         email: req.body.email
@@ -84,7 +81,6 @@ module.exports = function(app) {
           });
         }
       } else {
-        console.log("Incorrect username or password");
         res.json({
           error: "Incorrect email or password"
         });
@@ -136,7 +132,6 @@ module.exports = function(app) {
       where: { username: req.params.username },
       include: [{ model: db.Beer }]
     }).then(function(dbUser) {
-      console.log(dbUser);
       res.json(dbUser);
     });
   });
@@ -170,7 +165,6 @@ module.exports = function(app) {
     db.Beer.findAll({
       include: [{ model: db.User }]
     }).then(function(dbBeer) {
-      console.log(dbBeer);
       res.json(BeerReduction(dbBeer));
     });
   });
@@ -256,7 +250,6 @@ module.exports = function(app) {
   });
 
   //Get user profile image
-
   app.get("/api/users/getImage/:username", function(req, res) {
     db.User.findOne({
       where: {
@@ -264,6 +257,39 @@ module.exports = function(app) {
       }
     }).then(function(image) {
       res.json(image);
+    });
+  });
+  //Top Drinkers
+  app.get("/api/topusers", function(req, res) {
+    db.User.findAll({
+      include: [{ model: db.Beer }]
+    }).then(function(dbUser) {
+      if (dbUser !== null) {
+        var Users = [];
+        var Beers = [];
+        var TopUsers = {};
+        var TopComplete = [];
+        for (var i = 0; i < dbUser.length; i++) {
+          Users.push(dbUser[i].username);
+          if (dbUser[i].Beers.length !== 0) {
+            Beers.push(BeerReduction(dbUser[i].Beers).length);
+          } else {
+            Beers.push(0);
+          }
+        }
+        for (i = 0; i < Beers.length; i++) {
+          TopUsers.Name = Users[i];
+          TopUsers.Quantity = Beers[i];
+          TopComplete.push(TopUsers);
+          TopUsers = {};
+        }
+        if (TopComplete.length > 1) {
+          TopComplete.sort(function(a, b) {
+            return b.Quantity - a.Quantity;
+          });
+        }
+      }
+      res.json(TopComplete);
     });
   });
 };

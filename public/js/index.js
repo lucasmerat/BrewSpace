@@ -263,6 +263,27 @@ function PopulateDashboard() {
     }).then(function(Top) {
       $(".miniprofileUnique").text(Top.length);
     });
+
+    $(".topDrinkers").html(
+      "<li class='collection-header'><h4>Global Top Drinkers</h4></li>"
+    );
+    $.ajax("/api/topusers", {
+      type: "GET"
+    }).then(function(Users) {
+      var limit = 5;
+      if (Users.length < limit) {
+        limit = Users.length;
+      }
+      for (var i = 0; i < limit; i++) {
+        var item =
+          "<li class='collection-item'><i class='fas fa-beer top-beer-icon'></i> <b><span>" +
+          Users[i].Name +
+          "</span></b><br><span class='fun-beer'>" +
+          Users[i].Quantity +
+          "</span> Unique Drinks";
+        $(".topDrinkers").append(item);
+      }
+    });
   }
 }
 
