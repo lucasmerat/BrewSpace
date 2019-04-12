@@ -176,11 +176,11 @@ function PopulateDashboard() {
       }
       for (var i = 0; i < limit; i++) {
         var item =
-          "<li class='collection-item'><i class='fas fa-beer top-beer-icon'></i> <b><span>" +
+          "<li class='collection-item'><i class='fas fa-beer top-beer-icon'></i> <b><span class='top-beer-text'>" +
           Beers[i].Name +
-          "</span></b> <a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a><br><span class='fun-beer'>" +
+          "</span></b><a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a><br><div class='top-beer-div'><span class='fun-beer'>" +
           Beers[i].Quantity +
-          "</span> Drinks<a data-name=" +
+          "</span> Drinks</div><a data-name=" +
           Beers[i].Name +
           " class='secondary-content'>";
         $(".topBeers").append(item);
@@ -264,6 +264,7 @@ function PopulateDashboard() {
       $(".miniprofileUnique").text(Top.length);
     });
 
+    // Top Global Drinkers
     $(".topDrinkers").html(
       "<li class='collection-header'><h4>Global Top Drinkers</h4></li>"
     );
@@ -276,11 +277,11 @@ function PopulateDashboard() {
       }
       for (var i = 0; i < limit; i++) {
         var item =
-          "<li class='collection-item'><i class='fas fa-beer top-beer-icon'></i> <b><span>" +
+          "<li class='collection-item'><i class='fas fa-beer top-beer-icon'></i><b><span> " +
           Users[i].Name +
-          "</span></b><br><span class='fun-beer'>" +
+          "</span></b><br><div class='top-beer-div'><span class='fun-beer'>" +
           Users[i].Quantity +
-          "</span> Unique Drinks";
+          "</span> Unique Drinks</div>";
         $(".topDrinkers").append(item);
       }
     });
