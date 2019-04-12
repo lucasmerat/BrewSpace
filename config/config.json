@@ -1,14 +1,14 @@
 {
   "development": {
     "username": "root",
-    "password": "OiTuimMbWiw10!",
+    "password": "",
     "database": "brewspace",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "OiTuimMbWiw10!",
+    "password": "",
     "database": "testdb",
     "host": "localhost",
     "dialect": "mysql",
