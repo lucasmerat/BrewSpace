@@ -3,7 +3,7 @@
 }
 
 .container {
-  width: 90%;
+  width: 100%;
 }
 .miniprofile {
   position: -webkit-sticky;
@@ -13,13 +13,6 @@
   font-size: 20px;
 }
 
-.topUserBeers {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  padding: 50px;
-  font-size: 20px;
-}
 /* 
 .timelineAllUsers {
   position: fixed;	
@@ -31,6 +24,45 @@
 }
  */
 
+.topUserBeers,.topUserDrinkers {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding: 5px;
+  font-size: 18px;
+}
+
+.topDrinkers {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding: 5px;
+  font-size: 20px;
+}
+
+.miniprofileUnique {
+  margin-bottom: 10px;
+}
+
+.miniprofile-user-div {
+  text-align: center;
+}
+
+.miniprofile-div {
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* .top-beers-drinks-words {
+margin-top: 20px;
+} */
+
+/* 
+ .top-beer-text {
+padding: 5px;
+margin-bottom: 10px;
+ } */
+
 .usernameTitle {
   font-weight: bold !important;
 }
@@ -38,6 +70,9 @@
 .btn:hover,
 .btn-small:hover {
   background-color: #dc7f15 !important;
+}
+.collection-item {
+  padding: 5px;
 }
 
 .btn,
@@ -62,8 +97,8 @@ a:hover {
 }
 
 .top-beer-icon {
-  font-size: 24px;
-  margin-bottom: 10px;
+  /* font-size: 24px; */
+  margin-bottom: 2px;
 }
 
 .timelineAllUsers {
@@ -129,8 +164,18 @@ h6,
   color: #fff;
   background-color: #f28e1c;
   border-radius: 2px;
-  padding: 3px 6px;
+  padding: 4px 6px;
+  /* margin-top: 20px; */
 }
+
+.top-beer-div {
+margin-top: 10px;
+}
+
+/* #display-beer-info {
+  margin-bottom: 10px !important;
+  
+} */
 
 .whole-row {
   margin-top: 24px;
