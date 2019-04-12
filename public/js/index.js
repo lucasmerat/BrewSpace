@@ -278,8 +278,11 @@ function PopulateDashboard() {
       for (var i = 0; i < limit; i++) {
         var item =
           "<li class='collection-item'><b><span> " +
+          "<b><a data-user=" +
           Users[i].Name +
-          "</span></b><br><div class='top-beer-div'><span class='fun-beer'>" +
+          " class=''>" +
+          Users[i].Name +
+          "</a></b></span></b><br><div class='top-beer-div'><span class='fun-beer'>" +
           Users[i].Quantity +
           "</span> Unique Drinks</div>";
         $(".topDrinkers").append(item);
