@@ -5,6 +5,11 @@
 .container {
   width: 100%;
 }
+
+.card-content {
+  padding: 4px !important;
+}
+
 .miniprofile {
   position: -webkit-sticky;
   position: sticky;
@@ -13,23 +18,16 @@
   font-size: 20px;
 }
 
-/* 
 .timelineAllUsers {
-  position: fixed;	
-  top: 65px !important;
-  left: 25% !important; 
-  right: 25% !important; 
-  width: 100px;
-  height: 200px;
+  display: inline-block;
 }
- */
 
 .topUserBeers,.topUserDrinkers {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   padding: 5px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .topDrinkers {
@@ -37,7 +35,7 @@
   position: sticky;
   top: 0;
   padding: 5px;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .miniprofileUnique {
@@ -53,16 +51,6 @@
   text-align: center;
 }
 
-/* .top-beers-drinks-words {
-margin-top: 20px;
-} */
-
-/* 
- .top-beer-text {
-padding: 5px;
-margin-bottom: 10px;
- } */
-
 .usernameTitle {
   font-weight: bold !important;
 }
@@ -71,6 +59,7 @@ margin-bottom: 10px;
 .btn-small:hover {
   background-color: #dc7f15 !important;
 }
+
 .collection-item {
   padding: 5px;
 }
@@ -88,21 +77,31 @@ a {
 }
 
 a:hover {
-  color: #dc7f15;
+  color: black;
+}
+
+#log-drink {
+  font-size: 30px;
+}
+
+#log-drink:hover {
+  font-size: 40px;
+}
+
+.fa-info-circle:hover {
+  color: #f28e1c!important;
+}
+
+.top-beer-div {
+ font-size: 14px;
 }
 
 .topUserBeers {
-  /* float: right; */
   display: inline-block;
 }
 
 .top-beer-icon {
-  /* font-size: 24px; */
   margin-bottom: 2px;
-}
-
-.timelineAllUsers {
-  display: inline-block;
 }
 
 .profile-timeline-beer {
@@ -171,11 +170,6 @@ h6,
 .top-beer-div {
 margin-top: 10px;
 }
-
-/* #display-beer-info {
-  margin-bottom: 10px !important;
-  
-} */
 
 .whole-row {
   margin-top: 24px;

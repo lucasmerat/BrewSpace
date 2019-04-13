@@ -63,6 +63,11 @@ body {
   outline: 0 !important;
 }
 
+.how-to{
+font-size: 26px;
+color: black;
+}
+
 hr {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;

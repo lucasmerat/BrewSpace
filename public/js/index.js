@@ -165,7 +165,7 @@ function PopulateDashboard() {
   //Populate Top Beers
   if (path === "/dashboard") {
     $(".topBeers").html(
-      "<li class='collection-header'><h4>Global Top Beers</h4></li>"
+      "<li class='collection-header'><h4>Top 5 Beverages</h4></li>"
     );
     $.ajax("/api/beers/top", {
       type: "GET"
@@ -176,9 +176,9 @@ function PopulateDashboard() {
       }
       for (var i = 0; i < limit; i++) {
         var item =
-          "<li class='collection-item'><i class='fas fa-beer top-beer-icon'></i> <b><span class='top-beer-text'>" +
+          "<li class='collection-item'><b><span class='top-beer-text'>" +
           Beers[i].Name +
-          "</span></b><a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a><br><div class='top-beer-div'><span class='fun-beer'>" +
+          "</span></b> <a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a><br><div class='top-beer-div'><span class='fun-beer'>" +
           Beers[i].Quantity +
           "</span> Drinks</div><a data-name=" +
           Beers[i].Name +
@@ -264,9 +264,9 @@ function PopulateDashboard() {
       $(".miniprofileUnique").text(Top.length);
     });
 
-    // Top Global Drinkers
+    // Populate Top Global Drinkers
     $(".topDrinkers").html(
-      "<li class='collection-header'><h4>Global Top Drinkers</h4></li>"
+      "<li class='collection-header'><h4>Top 5 Drinkers</h4></li>"
     );
     $.ajax("/api/topusers", {
       type: "GET"
@@ -277,9 +277,12 @@ function PopulateDashboard() {
       }
       for (var i = 0; i < limit; i++) {
         var item =
-          "<li class='collection-item'><i class='fas fa-beer top-beer-icon'></i><b><span> " +
+          "<li class='collection-item'><b><span> " +
+          "<b><a data-user=" +
           Users[i].Name +
-          "</span></b><br><div class='top-beer-div'><span class='fun-beer'>" +
+          " class=''>" +
+          Users[i].Name +
+          "</a></b></span></b><br><div class='top-beer-div'><span class='fun-beer'>" +
           Users[i].Quantity +
           "</span> Unique Drinks</div>";
         $(".topDrinkers").append(item);
