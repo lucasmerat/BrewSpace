@@ -176,7 +176,7 @@ function PopulateDashboard() {
       }
       for (var i = 0; i < limit; i++) {
         var item =
-          "<li class='collection-item'><b><span class='top-beer-text'>" +
+          "<li class='collection-item'><span></span><b><span class='top-beer-text'>" +
           Beers[i].Name +
           "</span></b> <a id='display-beer-info' class='modal-trigger' data-target='modal3'><i class='fas fa-info-circle grey-text'></i></a><br><div class='top-beer-div'><span class='fun-beer'>" +
           Beers[i].Quantity +
@@ -505,6 +505,7 @@ $(document).on("click", "#display-beer-info", function() {
   let beerName = $(this)
     .siblings()[1]
     .innerText.trim();
+  console.log($(this).siblings());
   $("#beer-info-title").text(beerName);
   $.ajax("/api/data/display/" + beerName, {
     type: "GET"
