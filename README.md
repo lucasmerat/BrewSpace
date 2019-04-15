@@ -4,7 +4,7 @@
 
 ## Deployed app
 	
-Check out the app [here](https://salty-tor-49527.herokuapp.com/).
+Check out the app [here](https://brewspace.herokuapp.com/).
 
 ## Description
 
@@ -27,6 +27,9 @@ To use the app,
 - [jQuery](https://jquery.com/)
 - [Handlebars](https://handlebarsjs.com/)
 - [Materialize](http://materializecss.com/)
+- [Chai](https://www.npmjs.com/package/chai)
+- [Mocha](https://www.npmjs.com/package/mocha)
+- [Cookies](https://www.npmjs.com/package/cookies)
 
 ### Installing
  
@@ -35,6 +38,6 @@ If you would like to run the application locally:
 - Install NPM dependencies by running `npm install` in the project directory.
 - Open `config/config.json` and update the development password to your local mySQL password
 - Open a SQL IDE like MySQL Workbench
-- Run `CREATE DATABASE movies_db;`
+- Run `CREATE DATABASE brewspace;`
 - Ensure that you are in the root project directory, then run `node server`.
 - The application will be running at `localhost:3000/`
