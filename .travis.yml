@@ -7,4 +7,5 @@ cache:
   directories:
     - node_modules
 before_install:
-  - mysql -e 'CREATE DATABASE brew_db;'
+  - mysql -e 'CREATE DATABASE brewspace;'
+  - mysql -e 'CREATE DATABASE testdb;'
