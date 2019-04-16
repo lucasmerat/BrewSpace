@@ -41,3 +41,9 @@ If you would like to run the application locally:
 - Run `CREATE DATABASE brewspace;`
 - Ensure that you are in the root project directory, then run `node server`.
 - The application will be running at `localhost:3000/`
+
+### Future features
+- [ ] Add a friend and only see what your friends are drinking
+- [ ] Like and comment on users' activities
+- [ ] Beer suggestions to auto-fill when logging a beer
+- [ ] Add Google Maps API with places to enter where you had the brew
